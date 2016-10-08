@@ -2,4 +2,4 @@
 
 Canvas link: https://canvas.uw.edu/courses/1066610/assignments/3383811
 
-Hi Alex, see you at the iHangouts after class! Although you will see this message a few days after the event...
+Hi Alex, hope your quarter has been going welll!
