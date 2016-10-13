@@ -168,12 +168,20 @@ p {
 }
 
 .testimonials-section {
+    padding: 30px 100px 30px 100px;
     background-color: #F8F8F8;
 }
 
 .testimonials-section h2 {
     text-align: center;
 }
+
+.testimonials {
+    height: 300px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
 
 @media (max-width: 768px) {
     .feature {
