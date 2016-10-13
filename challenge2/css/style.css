@@ -188,6 +188,9 @@ p {
     margin-bottom: 10px;
 }
 
+.footer {
+    background-color: #391D18;
+}
 
 @media (max-width: 768px) {
     .feature {
