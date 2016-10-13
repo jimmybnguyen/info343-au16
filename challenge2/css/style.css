@@ -8,8 +8,22 @@ header {
     height: 400px;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     margin-top: 0px;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-weight: 100;
+}
+
+h2.small {
+    font-variant: small-caps;
+}
+
+p.small {
+    font-variant: small-caps;
 }
 
 body {
@@ -18,14 +32,20 @@ body {
     font-size: 18px;
 }
 
+p {
+    line-height: 1.43;
+    margin-top: 0px;
+    margin-bottom: 1em;
+}
+
 .sub-heading {
     width: 50%;
 }
 
 .get-yours-link {
     display: inline-block;
-    padding: 5px;
-    background-color: brown;
+    padding: 8px 15px 8px 15px;
+    background-color: #814236;
     color: white;
     border: 1px solid black;
 }
@@ -67,12 +87,13 @@ body {
 }
 
 .features-section {
-    padding: 15px 0px;
+    padding: 30px 0px;
     background-color: #F8F8F8;
 }
 
 .features-section h2 {
     text-align: center;
+    padding-bottom: 30px
 }
 
 .feature {
@@ -87,6 +108,38 @@ body {
 
 .feature svg {
     height: 50px;
+    fill: #814236;
+}
+
+.uses-section {
+    background-color: #EBEBEB;
+    padding: 30px 100px 30px 100px
+}
+
+.uses-section h2 {
+    text-align: center;
+}
+
+.uses {
+    height: 300px;
+    background-color: red;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.uses img {
+    height: 150px;
+}
+
+.testimonials-section {
+    background-color: #F8F8F8;
+}
+
+.testimonials-section h2 {
+    text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -97,6 +150,7 @@ body {
 
     .feature svg {
         float: left;
+        fill: #814236;
     }
 
     .feature-copy {
