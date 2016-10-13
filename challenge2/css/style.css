@@ -113,7 +113,7 @@ p {
 
 .uses-section {
     background-color: #EBEBEB;
-    padding: 30px 100px 30px 100px
+    padding: 30px 100px 30px 100px;
 }
 
 .uses-section h2 {
@@ -122,15 +122,46 @@ p {
 
 .uses {
     height: 300px;
-    background-color: red;
-    text-align: center;
-    padding: 10px;
+    background-color: white;
+    text-align: left;
     border: 1px solid #DFDFDF;
     border-radius: 3px;
     margin-bottom: 10px;
 }
 
-.uses img {
+.uses h3 {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.uses p {
+    padding-left: 10px;
+}
+
+.uses-img-top-color {
+    background-image: url('../img/coloring.jpg');
+    background-size: cover;
+    height: 150px;
+}
+
+.uses-img-top-draft {
+    background-image: url('../img/drafting.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 150px;
+}
+
+.uses-img-top-art {
+    background-image: url('../img/art.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 150px;
+}
+
+.uses-img-top-note {
+    background-image: url('../img/note-taking.jpg');
+    background-size: cover;
+    background-position: center;
     height: 150px;
 }
 
