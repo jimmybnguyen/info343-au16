@@ -40,11 +40,12 @@ p {
     margin-bottom: 1em;
 }
 
+
 .img-circle {
-    border-radius: 100%;
     float: left;
     padding: 20px;
 }
+
 
 .sub-heading {
     width: 50%;
@@ -68,30 +69,6 @@ p {
 
 .fa-shopping-cart {
     margin-right: 3px;
-}
-
-@media (max-width: 992px) {
-    header {
-        background-image: linear-gradient(to bottom, #391D18, #814236);
-        color: white;
-        padding: 25px;
-        height: auto;
-    }
-
-    .get-yours-link {
-        display: none;
-    }
-
-    .get-yours-link-mobile {
-        display: block;
-        color: white;
-        font-size: 24px;
-        float: right;
-    }
-
-    .sub-heading {
-        width: auto;
-    }
 }
 
 .features-section {
@@ -199,6 +176,35 @@ p {
     text-decoration: none;
 }
 
+.footer i {
+    font-size: 120%;
+    padding: 5px;
+}
+
+@media (max-width: 992px) {
+    header {
+        background-image: linear-gradient(to bottom, #391D18, #814236);
+        color: white;
+        padding: 25px;
+        height: auto;
+    }
+
+    .get-yours-link {
+        display: none;
+    }
+
+    .get-yours-link-mobile {
+        display: block;
+        color: white;
+        font-size: 24px;
+        float: right;
+    }
+
+    .sub-heading {
+        width: auto;
+    }
+}
+
 @media (max-width: 768px) {
     .feature {
         text-align: left;
@@ -213,4 +219,15 @@ p {
     .feature-copy {
         padding-left: 60px;
     }
+    
+    .footer i {
+        font-size: 120%;
+        padding: 5px;
+        float: left;
+    }
+    
+    .pull-right {
+        float: left !important;
+    }
+    
 }
