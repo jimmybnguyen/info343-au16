@@ -181,6 +181,11 @@ p {
     padding: 5px;
 }
 
+.social-media-icons {
+    float: right;
+    margin-top: 0;
+}
+
 @media (max-width: 992px) {
     header {
         background-image: linear-gradient(to bottom, #391D18, #814236);
@@ -226,8 +231,11 @@ p {
         float: left;
     }
     
-    .pull-right {
-        float: left !important;
+    .social-media-icons {
+        float: left;
+        margin-bottom: 20px;
+        padding: 0;
     }
+
     
 }
