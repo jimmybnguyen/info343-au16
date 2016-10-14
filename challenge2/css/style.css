@@ -189,7 +189,14 @@ p {
 }
 
 .footer {
+    padding: 75px;
     background-color: #391D18;
+    color: #EEEEEE;
+}
+
+.footer a {
+    color: #AAAAAA;
+    text-decoration: none;
 }
 
 @media (max-width: 768px) {
