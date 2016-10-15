@@ -163,6 +163,11 @@ p {
     display: inline;
 }
 
+.testimonials-section h4 {
+    line-height: 80%;
+    color: #999999;
+}
+
 .testimonials p {
     overflow: hidden;
 }
@@ -248,6 +253,4 @@ p {
         margin-bottom: 20px;
         padding: 0;
     }
-
-    
 }
