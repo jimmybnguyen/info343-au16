@@ -159,6 +159,18 @@ p {
     text-align: center;
 }
 
+.testimonials-section h3, h4 {
+    display: inline;
+}
+
+.testimonials p {
+    overflow: hidden;
+}
+
+.testimonials img {
+    float: left;
+}
+
 .testimonials {
     height: 300px;
     text-align: left;
