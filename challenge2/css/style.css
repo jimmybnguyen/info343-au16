@@ -61,9 +61,14 @@ p {
     background-color: #814236;
     color: white;
     border: 1px solid black;
+    text-decoration: none;
 }
 
 .get-yours-link:hover {
+    color: white;
+}
+
+.get-yours-link:visited {
     color: white;
 }
 
@@ -225,7 +230,7 @@ p {
         font-size: 24px;
         float: right;
     }
-
+    
     .sub-heading {
         width: auto;
     }
