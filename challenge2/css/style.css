@@ -38,13 +38,6 @@ p {
     margin-bottom: 1em;
 }
 
-
-.img-circle {
-    float: left;
-    padding: 20px;
-}
-
-
 .sub-heading {
     width: 50%;
     font-weight: 600;
@@ -193,8 +186,9 @@ p {
     overflow: hidden;
 }
 
-.testimonials img {
+.testimonials .img-circle {
     float: left;
+    padding: 20px;
 }
 
 footer {
@@ -213,7 +207,7 @@ footer i {
     padding: 5px;
 }
 
-.social-media-icons {
+footer .social-media-icons {
     float: right;
     margin-top: 0;
 }
