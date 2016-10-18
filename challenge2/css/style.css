@@ -26,10 +26,6 @@ h2.small {
     padding-bottom: 20px;
 }
 
-p.small {
-    font-variant: small-caps;
-}
-
 body {
     font-family: 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     font-weight: 300;
@@ -107,7 +103,8 @@ p {
 
 .uses-section {
     background-color: #EBEBEB;
-    padding: 30px 100px 30px 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .uses-section h2 {
@@ -136,6 +133,8 @@ p {
     background-image: url('../img/coloring.jpg');
     background-size: cover;
     height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
 }
 
 .uses-img-top-draft {
@@ -143,6 +142,8 @@ p {
     background-size: cover;
     background-position: center;
     height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
 }
 
 .uses-img-top-art {
@@ -150,6 +151,8 @@ p {
     background-size: cover;
     background-position: center;
     height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
 }
 
 .uses-img-top-note {
@@ -157,10 +160,13 @@ p {
     background-size: cover;
     background-position: center;
     height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
 }
 
 .testimonials-section {
-    padding: 30px 100px 30px 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     background-color: #F8F8F8;
 }
 
@@ -177,6 +183,12 @@ p {
     color: #999999;
 }
 
+.testimonials {
+    height: 300px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
 .testimonials p {
     overflow: hidden;
 }
@@ -185,24 +197,18 @@ p {
     float: left;
 }
 
-.testimonials {
-    height: 300px;
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-.footer {
+footer {
     padding: 75px;
     background-color: #391D18;
     color: #EEEEEE;
 }
 
-.footer a {
+footer a {
     color: #AAAAAA;
     text-decoration: none;
 }
 
-.footer i {
+footer i {
     font-size: 120%;
     padding: 5px;
 }
@@ -236,7 +242,7 @@ p {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     
     h1 {
         font-weight: 100;    
@@ -258,7 +264,7 @@ p {
         padding-left: 60px;
     }
     
-    .footer i {
+    footer i {
         font-size: 120%;
         padding: 5px;
         float: left;
