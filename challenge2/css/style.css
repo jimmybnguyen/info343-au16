@@ -264,10 +264,9 @@ footer .social-media-icons {
         float: left;
     }
     
-    .social-media-icons {
+    footer .social-media-icons {
         float: left;
         margin-bottom: 20px;
-        padding: 0;
     }
     
     .uses {
