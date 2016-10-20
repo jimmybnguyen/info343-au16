@@ -1,4 +1,3 @@
-/*
-app.js - application script for the movies challenge
-add your code to this file
-*/
+"use strict";
+var dropdown = document.querySelector("#dropdown");
+var table = document.querySelector(".table");
