@@ -12,7 +12,10 @@ var dropdown = document.querySelector("#report-select");
 var table = document.querySelector("#report");
 
 var starWars = MOVIES.filter(function (item) {
-    return item.title.toLowerCase() === "star wars";
+    var lowerCaseTitle = item.title.toLowerCase();
+    return lowerCaseTitle.includes("star wars");
+    //return item.title.toLowerCase() === "star wars";
+
 });
 
 
