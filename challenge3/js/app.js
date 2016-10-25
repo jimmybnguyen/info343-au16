@@ -6,15 +6,46 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Checking global variable
     console.log(MOVIES);
+    console.log(starWars);
 });
 
 var dropdown = document.querySelector("#report-select");
 var table = document.querySelector("#report");
+var genres = [];
 
 var starWars = MOVIES.filter(function (item) {
-    var lowerCaseTitle = item.title.toLowerCase();
-    return lowerCaseTitle.includes("star wars");
-    //return item.title.toLowerCase() === "star wars";
+    return item.title.toLowerCase().includes("star wars");
+});
+
+var remake20th = MOVIES.filter(function (item) {
+    var movieDate = new Date(item.released);
+    var compareDate = new Date("January 1, 2001");
+    return movieDate < compareDate;
+});
+
+/* .push is crashing the thing
+var avgByGenre = MOVIES.filter(function (item) {
+    var movieItem = {genre: item.genre, sales: item.sales};
+    if (genres.length != 0) {
+        for (var i = 0; i < genres.length; i++) {
+            if (genres[i].genre !== item.genre) {
+               //console.log(genres[i].genre);
+                //genres.push(movieItem);
+            }
+        }
+    } else {
+        genres.push(movieItem);
+    }
+});
+*/
+
+var avgByGenre = MOVIES.filter(function (item) {
+    if (item.title.toLowerCase().includes("star wars")) {
+        return {Genre: item.genre};
+    }
+});
+
+var topByTickets = MOVIES.filter(function (item) {
 
 });
 
@@ -141,13 +172,13 @@ dropdown.addEventListener("change", function (e) {
     // and build the table with the data for that value.
     var value = e.target.value;
 
-    if (value === "star-wars") {
+    if (value === "starWars") {
         buildRows(starWars);
-    } else if (value === "remake20") {
-        buildRows(remake20);
-    } else if (value === "avg-by-genre") {
+    } else if (value === "remake20th") {
+        buildRows(remake20th);
+    } else if (value === "avgByGenre") {
         buildRows(avgByGenre);
-    } else if (value === "top-by-tickets") {
+    } else if (value === "topByTickets") {
         buildRows(topByTickets);
     } else {
         buildRows(MOVIES);
