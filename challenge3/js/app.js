@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Checking global variable
     console.log(MOVIES);
-    console.log(starWars);
+    console.log(remake20th);
 });
 
 var dropdown = document.querySelector("#report-select");
@@ -22,6 +22,19 @@ var remake20th = MOVIES.filter(function (item) {
     var compareDate = new Date("January 1, 2001");
     return movieDate < compareDate;
 });
+
+function compareTitle(a, b) {
+    var str1 = a.title;
+    var str2 = b.title
+    return str1.localeCompare(str2);
+}
+
+function compareReleased(a, b) {
+    return parseInt(a.released) - parseInt(b.released);
+}
+
+remake20th.sort(compareReleased);
+starWars.sort(compareTitle);
 
 /* .push is crashing the thing
 var avgByGenre = MOVIES.filter(function (item) {
