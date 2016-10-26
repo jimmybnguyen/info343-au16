@@ -169,10 +169,19 @@ function buildRows(rows) {
         // in the object by using bracket notation
         // to access each property in the object.
         nameKeys.forEach(function (key) {
+            var formatted = "";
             var value = name[key];
-
+            if (key == "tickets") {
+                formatted = numeral(value).format('0,0');
+            } else  if (key == "sales") {
+                formatted = numeral(value).format('$0,0p[.]00');
+            } else if (key == "released") {
+                formatted = moment(value).format("l");
+            } else {
+                formatted = value;
+            }
             var td = document.createElement("td");
-            td.textContent = value;
+            td.textContent = formatted;
 
             nameTr.appendChild(td);
         });
