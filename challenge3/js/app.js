@@ -5,8 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Document Readay");
     
     // Checking global variable
-    //console.log(MOVIES);
-    //console.log(genreSales);
+    console.log(MOVIES);
 });
 
 var dropdown = document.querySelector("#report-select");
@@ -26,6 +25,8 @@ var remake20th = MOVIES.filter(function (item) {
 
 remake20th.sort(compareReleased);
 
+var avgByGenre = generateAvg();
+
 function compareTitle(a, b) {
     var str1 = a.title;
     var str2 = b.title
@@ -36,73 +37,16 @@ function compareReleased(a, b) {
     return parseInt(a.released) - parseInt(b.released);
 }
 
-/* .push is crashing the thing
-var avgByGenre = MOVIES.filter(function (item) {
-    var movieItem = {genre: item.genre, sales: item.sales};
-    if (genres.length != 0) {
-        for (var i = 0; i < genres.length; i++) {
-            if (genres[i].genre !== item.genre) {
-               //console.log(genres[i].genre);
-                //genres.push(movieItem);
-            }
-        }
-    } else {
-        genres.push(movieItem);
-    }
-});
-*/
-
-var avgByGenre = [];
-//var genreSales = [];
-//var genreSales = new Set();
-
-/*
-function genreSumSales() {
-    for (var i = 0 ; i < MOVIES.length; i++) {
-        if (!genreSales.hasOwnProperty(MOVIES[i].genre)) {
-            genreSales.push({genre: MOVIES[i].genre, sales: MOVIES[i].sales, count: 1})   
-        } else {
-            console.log("else");    
-        }
-    }
-}
-*/
-/*
-function genreSumSales() {
-    var genreSales = {};
-    
-    MOVIES.forEach(function(item) {
-        
-        //if the genre is not in the object yet, create a new key with
-        //the genre and the value of sales at index 0, and a count at index 1
-        if (!(item.genre in genreSales)) {;
-            genreSales[item.genre] = [item.sales];
-            genreSales[item.genre][1] = 1;
-
-        //if the genre is in the object, add the sales to the old sales amount
-        //at index 0, and increase count by 1 at index 1
-        } else {
-            genreSales[item.genre][0] += item.sales;
-            genreSales[item.genre][1] += 1;
-
-        }
-    });
-    //console.log(genreSales);
-    var genreAvg = [];
-    for (var item in genreSales) {
-        console.log(item);
-    }
-}*/
-
-function genreSumSales() {
-    var genreSales = {};
+function generateAvg() {
+    var genreSales = [];
     
     MOVIES.forEach(function(item) {
         
         //if the genre is not in the object yet, create a new key with
         //the genre, and add in the genre name and sales
         if (!(item.genre in genreSales)) {;
-            genreSales[item.genre] = {genre : item.genre, sales : item.sales, count: 1};
+            //genreSales[item.genre] = {genre : item.genre, sales : item.sales, count: 1};
+            genreSales[item.genre] = {genre: item.genre, sales : item.sales, count: 1};             
 
         //if the genre is in the object, add the sales to the old sales amount
         //and increase count by 1
@@ -112,38 +56,17 @@ function genreSumSales() {
 
         }
     });
-    console.log(genreSales.keys);
-    for (var item in genreSales) {
-        //console.log(item);
+    
+    var avgSales = [];
+    //calculates the average sales of each genre
+    for (var key in genreSales) {
+        var avg = genreSales[key].sales / genreSales[key].count;
+        avgSales.push({genre: key, avg: avg})
     }
+    return avgSales;
 }
 
-
-/* set
-function genreSumSales() {
-    for (var i = 0; i < MOVIES.length; i++) {
-        if (!genreSales.has(MOVIES[i].genre)) {
-            var test = {genre: MOVIES[i].genre, sales: MOVIES[i].sales, count: 1};
-            genreSales.add(test);
-        }
-    }
-}*/
-
-/*
-function genreSumSales() {
-    for (var i = 0 ; i < MOVIES.length; i++) {
-            genreSales[MOVIES[i].genre] = MOVIES[i].sales;
-        if (!MOVIES[i].genre in genreSales) {
-            genreSales[MOVIES[i].genre] = MOVIES[i].sales;
-            genreSales["count"] = 1;
-        } else {
-            
-        }
-    }
-}*/
-
-
-genreSumSales();
+generateAvg();
 
 var topByTickets = MOVIES.filter(function (item) {
 
