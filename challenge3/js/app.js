@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 var dropdown = document.querySelector("#report-select");
-var table = document.querySelector("#report");
+var table = document.querySelector(".table");
 
 var starWars = MOVIES.filter(function (item) {
     return item.title.toLowerCase().includes("star wars");
