@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Checking global variable
     console.log(MOVIES);
+    console.log(avgByGenre);
 });
 
 var dropdown = document.querySelector("#report-select");
@@ -26,6 +27,9 @@ var remake20th = MOVIES.filter(function (item) {
 remake20th.sort(compareReleased);
 
 var avgByGenre = generateAvg();
+var topByTickets = generateTop();
+
+console.log(topByTickets);
 
 function compareTitle(a, b) {
     var str1 = a.title;
@@ -37,16 +41,20 @@ function compareReleased(a, b) {
     return parseInt(a.released) - parseInt(b.released);
 }
 
+function compareTickets(a, b) {
+    return  parseInt(b.tickets) - parseInt(a.tickets);
+}
+
 function generateAvg() {
     var genreSales = [];
     
     MOVIES.forEach(function(item) {
-        
+
         //if the genre is not in the object yet, create a new key with
         //the genre, and add in the genre name and sales
         if (!(item.genre in genreSales)) {;
             //genreSales[item.genre] = {genre : item.genre, sales : item.sales, count: 1};
-            genreSales[item.genre] = {genre: item.genre, sales : item.sales, count: 1};             
+            genreSales[item.genre] = {sales : item.sales, count: 1};             
 
         //if the genre is in the object, add the sales to the old sales amount
         //and increase count by 1
@@ -61,17 +69,37 @@ function generateAvg() {
     //calculates the average sales of each genre
     for (var key in genreSales) {
         var avg = genreSales[key].sales / genreSales[key].count;
-        avgSales.push({genre: key, avg: avg})
+        if (key == "") {
+            avgSales.push({genre: "N/A", average: avg})
+        } else {
+            avgSales.push({genre: key, average: avg})
+        }
     }
     return avgSales;
 }
 
-generateAvg();
+function generateTop() {
+    var ticketSales = [];
+    
+    MOVIES.forEach(function(item) {
+        var releaseYear = item.released.substring(0,4);
+        var movie = item.title + " (" + releaseYear + ")";
+        if (!(movie in ticketSales)) {;
+            ticketSales[movie] = {tickets: item.tickets};             
+        } else {
+            ticketSales[movie].tickets += item.tickets;
 
-var topByTickets = MOVIES.filter(function (item) {
-
-});
-
+        }
+    });
+    
+    var topSales = [];
+    for (var key in ticketSales) {
+        topSales.push({title: key, tickets: ticketSales[key].tickets});
+    }
+    topSales.sort(compareTickets);
+    //topSales.length = 100;
+    return topSales;
+}
 
 function buildTable() {
     // table body and table head
