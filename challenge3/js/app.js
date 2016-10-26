@@ -5,23 +5,26 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Document Readay");
     
     // Checking global variable
-    console.log(MOVIES);
-    console.log(remake20th);
+    //console.log(MOVIES);
+    //console.log(genreSales);
 });
 
 var dropdown = document.querySelector("#report-select");
 var table = document.querySelector("#report");
-var genres = [];
 
 var starWars = MOVIES.filter(function (item) {
     return item.title.toLowerCase().includes("star wars");
 });
+
+starWars.sort(compareTitle);
 
 var remake20th = MOVIES.filter(function (item) {
     var movieDate = new Date(item.released);
     var compareDate = new Date("January 1, 2001");
     return movieDate < compareDate;
 });
+
+remake20th.sort(compareReleased);
 
 function compareTitle(a, b) {
     var str1 = a.title;
@@ -32,9 +35,6 @@ function compareTitle(a, b) {
 function compareReleased(a, b) {
     return parseInt(a.released) - parseInt(b.released);
 }
-
-remake20th.sort(compareReleased);
-starWars.sort(compareTitle);
 
 /* .push is crashing the thing
 var avgByGenre = MOVIES.filter(function (item) {
@@ -52,11 +52,98 @@ var avgByGenre = MOVIES.filter(function (item) {
 });
 */
 
-var avgByGenre = MOVIES.filter(function (item) {
-    if (item.title.toLowerCase().includes("star wars")) {
-        return {Genre: item.genre};
+var avgByGenre = [];
+//var genreSales = [];
+//var genreSales = new Set();
+
+/*
+function genreSumSales() {
+    for (var i = 0 ; i < MOVIES.length; i++) {
+        if (!genreSales.hasOwnProperty(MOVIES[i].genre)) {
+            genreSales.push({genre: MOVIES[i].genre, sales: MOVIES[i].sales, count: 1})   
+        } else {
+            console.log("else");    
+        }
     }
-});
+}
+*/
+/*
+function genreSumSales() {
+    var genreSales = {};
+    
+    MOVIES.forEach(function(item) {
+        
+        //if the genre is not in the object yet, create a new key with
+        //the genre and the value of sales at index 0, and a count at index 1
+        if (!(item.genre in genreSales)) {;
+            genreSales[item.genre] = [item.sales];
+            genreSales[item.genre][1] = 1;
+
+        //if the genre is in the object, add the sales to the old sales amount
+        //at index 0, and increase count by 1 at index 1
+        } else {
+            genreSales[item.genre][0] += item.sales;
+            genreSales[item.genre][1] += 1;
+
+        }
+    });
+    //console.log(genreSales);
+    var genreAvg = [];
+    for (var item in genreSales) {
+        console.log(item);
+    }
+}*/
+
+function genreSumSales() {
+    var genreSales = {};
+    
+    MOVIES.forEach(function(item) {
+        
+        //if the genre is not in the object yet, create a new key with
+        //the genre, and add in the genre name and sales
+        if (!(item.genre in genreSales)) {;
+            genreSales[item.genre] = {genre : item.genre, sales : item.sales, count: 1};
+
+        //if the genre is in the object, add the sales to the old sales amount
+        //and increase count by 1
+        } else {
+            genreSales[item.genre].sales += item.sales;
+            genreSales[item.genre].count += 1;
+
+        }
+    });
+    console.log(genreSales.keys);
+    for (var item in genreSales) {
+        //console.log(item);
+    }
+}
+
+
+/* set
+function genreSumSales() {
+    for (var i = 0; i < MOVIES.length; i++) {
+        if (!genreSales.has(MOVIES[i].genre)) {
+            var test = {genre: MOVIES[i].genre, sales: MOVIES[i].sales, count: 1};
+            genreSales.add(test);
+        }
+    }
+}*/
+
+/*
+function genreSumSales() {
+    for (var i = 0 ; i < MOVIES.length; i++) {
+            genreSales[MOVIES[i].genre] = MOVIES[i].sales;
+        if (!MOVIES[i].genre in genreSales) {
+            genreSales[MOVIES[i].genre] = MOVIES[i].sales;
+            genreSales["count"] = 1;
+        } else {
+            
+        }
+    }
+}*/
+
+
+genreSumSales();
 
 var topByTickets = MOVIES.filter(function (item) {
 
@@ -91,7 +178,7 @@ function buildTable() {
     yearTh.textContent = "Year";
     
     var salesTh = document.createElement("th");
-    salesTh.textContent = "Sales";
+    salesTh.textContent = "Gross Sales";
 
     var ticketsTh = document.createElement("th");
     ticketsTh.textContent = "Tickets";
