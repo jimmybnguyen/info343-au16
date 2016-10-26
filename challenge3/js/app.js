@@ -1,14 +1,5 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Making sure JS loads
-    console.log("Document Readay");
-    
-    // Checking global variable
-    console.log(MOVIES);
-    console.log(avgByGenre);
-});
-
 var dropdown = document.querySelector("#report-select");
 var table = document.querySelector(".table");
 
@@ -16,7 +7,7 @@ var starWars = MOVIES.filter(function (item) {
     return item.title.toLowerCase().includes("star wars");
 });
 
-starWars.sort(compareTitle);
+starWars.sort(compareString('title'));
 
 var remake20th = MOVIES.filter(function (item) {
     var movieDate = new Date(item.released);
@@ -24,28 +15,36 @@ var remake20th = MOVIES.filter(function (item) {
     return movieDate < compareDate;
 });
 
-remake20th.sort(compareReleased);
+remake20th.sort(compareNum("released", "asc"));
 
-var avgByGenre = generateAvg();
+var avgByGenre = generateGenreAvg();
+
 var topByTickets = generateTop();
 
-console.log(topByTickets);
+var avgByRating = generateRatingAvg();
 
-function compareTitle(a, b) {
-    var str1 = a.title;
-    var str2 = b.title
-    return str1.localeCompare(str2);
+//http://stackoverflow.com/questions/8537602/any-way-to-extend-javascripts-array-sort-method-to-accept-another-parameter
+//sorts a numerical property by a descending or ascending order
+function compareNum(prop, order) {
+    return function(a, b) {
+        if (order == "desc") {
+            return parseInt(b[prop]) - parseInt(a[prop]);
+        } else {
+            return parseInt(a[prop]) - parseInt(b[prop]);
+        }
+    }
 }
 
-function compareReleased(a, b) {
-    return parseInt(a.released) - parseInt(b.released);
+// sorts string alphabetically
+function compareString(prop) {
+    return function(a, b) {
+        var str1 = a[prop];
+        var str2 = b[prop];
+        return str1.localeCompare(str2);
+    }
 }
 
-function compareTickets(a, b) {
-    return  parseInt(b.tickets) - parseInt(a.tickets);
-}
-
-function generateAvg() {
+function generateGenreAvg() {
     var genreSales = [];
     
     MOVIES.forEach(function(item) {
@@ -75,6 +74,8 @@ function generateAvg() {
             avgSales.push({genre: key, average: avg})
         }
     }
+
+    avgSales.sort(compareNum('average', 'desc'));
     return avgSales;
 }
 
@@ -96,9 +97,48 @@ function generateTop() {
     for (var key in ticketSales) {
         topSales.push({title: key, tickets: ticketSales[key].tickets});
     }
-    topSales.sort(compareTickets);
-    //topSales.length = 100;
+    topSales.sort(compareNum('tickets', 'desc'));
+    
+    //only shows the top 100
+    topSales.length = 100;
+    
     return topSales;
+}
+
+function generateRatingAvg() {
+    var ratingStats = [];
+    
+    MOVIES.forEach(function(item) {
+
+        //if the genre is not in the object yet, create a new key with
+        //the genre, and add in the genre name and sales
+        if (!(item.rating in ratingStats)) {;
+            ratingStats[item.rating] = {sales : item.sales, tickets: item.tickets, count: 1};             
+
+        //if the genre is in the object, add the sales to the old sales amount
+        //and increase count by 1
+        } else {
+            ratingStats[item.rating].sales += item.sales;
+            ratingStats[item.rating].tickets += item.tickets;
+            ratingStats[item.rating].count += 1;
+
+        }
+    });
+    
+    var ratingAvg = [];
+    //calculates the average sales of each genre
+    for (var key in ratingStats) {
+        var avgSales = ratingStats[key].sales / ratingStats[key].count;
+        var avgTickets = ratingStats[key].tickets / ratingStats[key].count;
+        if (key == "") {
+            ratingAvg.push({genre: "N/A", averageCurrency: avgSales, averageNum : avgTickets})
+        } else {
+            ratingAvg.push({genre: key, averageCurrency: avgSales, averageNum : avgTickets})
+        }
+    }
+
+    //ratingAvg.sort(compareNum('average', 'desc'));
+    return ratingAvg;
 }
 
 function buildTable() {
@@ -150,8 +190,94 @@ function buildTable() {
 }
 
 function buildRows(rows) {
-    // First, build the table structure.
     buildTable();
+
+    // Find the table body, where the rows will be rendered.
+    var tbody = document.querySelector("tbody");
+    
+    // Iterate over each movie title,
+    // create the tr (row element) and td elements (column elements)
+    // and append to the table body.
+    rows.forEach(function (name) {
+        var nameTr = document.createElement("tr");
+
+        // Object.keys returns an array of the keys object
+        var nameKeys = Object.keys(name);
+
+        // formats the values using numeral.js and moment.js
+        nameKeys.forEach(function (key) {
+            var formatted = "";
+            var value = name[key];
+            if (key == "tickets") {
+                formatted = numeral(value).format('0,0');
+            } else  if (key == "sales") {
+                formatted = numeral(value).format('$0,0p[.]00');
+            } else if (key == "released") {
+                formatted = moment(value).format("l");
+            } else if (key == "averageCurrency") {
+                formatted = numeral(value).format('$0,0.00');
+            } else if (key == "averageNum") {
+                formatted = numeral(value).format('0,0');
+            } else {
+                formatted = value;
+            }
+            var td = document.createElement("td");
+            td.textContent = formatted;
+
+            nameTr.appendChild(td);
+        });
+
+        tbody.appendChild(nameTr);
+    });
+    
+    // Build totals rows
+    var tableFooter = document.createElement("tfoot");
+    var totalsTr = document.createElement("tr");
+    var totalsNameTd = document.createElement("td");;
+
+    // We don't want anything in the second column
+    var blankTd = document.createElement("td");
+
+    var totalsTotalTd = document.createElement("td");
+
+    // Append totals row
+    totalsTr.appendChild(totalsNameTd);
+    totalsTr.appendChild(blankTd);
+    totalsTr.appendChild(totalsTotalTd);
+
+    // Append footer (with totals)
+    tableFooter.appendChild(totalsTr);
+    table.appendChild(tableFooter);
+}
+
+
+function buildTable2() {
+    // table body and table head
+    var tbody = document.createElement("tbody");
+    var thead = document.createElement("thead");
+    
+    // Row for the header
+    var threadRow = document.createElement("tr");
+    
+    // Columns for the header
+    var genreTh = document.createElement("th");
+    genreTh.textContent = "Genre";
+
+    var avgTh = document.createElement("th");
+    avgTh.textContent = "Average Sales";
+
+    // Append these elements to the table
+    threadRow.appendChild(genreTh);
+    threadRow.appendChild(avgTh);
+    
+    thead.appendChild(threadRow);
+    table.appendChild(tbody);
+    table.appendChild(thead);
+}
+
+function buildRows2(rows) {
+    // First, build the table structure.
+    buildTable2();
 
     // Find the table body, where the rows will be rendered.
     var tbody = document.querySelector("tbody");
@@ -177,6 +303,10 @@ function buildRows(rows) {
                 formatted = numeral(value).format('$0,0p[.]00');
             } else if (key == "released") {
                 formatted = moment(value).format("l");
+            } else if (key == "averageCurrency") {
+                formatted = numeral(value).format('$0,0.00');
+            } else if (key == "averageNum") {
+                formatted = numeral(value).format('0,0');
             } else {
                 formatted = value;
             }
@@ -189,27 +319,15 @@ function buildRows(rows) {
         tbody.appendChild(nameTr);
     });
     
-    // Calculate the total for the given array of titles.
-    // Array.reduce takes an array of items,
-    // and returns a single value based on logic you provided.
-    // In this case, we want to sum all the name counts
-    // for the given list of movies.
-    var total = rows.reduce(function (sum, name) {
-        var newSum = sum + name.count;
-        return newSum;
-    }, 0); // 0 is the initial value for the sum
-    
     // Build totals rows
     var tableFooter = document.createElement("tfoot");
     var totalsTr = document.createElement("tr");
     var totalsNameTd = document.createElement("td");
-    totalsNameTd.textContent = "Total";
 
     // We don't want anything in the second column
     var blankTd = document.createElement("td");
 
     var totalsTotalTd = document.createElement("td");
-    totalsTotalTd.textContent = total;
 
     // Append totals row
     totalsTr.appendChild(totalsNameTd);
@@ -220,6 +338,97 @@ function buildRows(rows) {
     tableFooter.appendChild(totalsTr);
     table.appendChild(tableFooter);
 }
+
+
+function buildTable3() {
+    // table body and table head
+    var tbody = document.createElement("tbody");
+    var thead = document.createElement("thead");
+    
+    // Row for the header
+    var threadRow = document.createElement("tr");
+    
+    // Columns for the header
+    var titleTh = document.createElement("th");
+    titleTh.textContent = "Title";
+
+    var ticketsTh = document.createElement("th");
+    ticketsTh.textContent = "Tickets Sold";
+
+    // Append these elements to the table
+    threadRow.appendChild(titleTh);
+    threadRow.appendChild(ticketsTh);
+    
+    thead.appendChild(threadRow);
+    table.appendChild(tbody);
+    table.appendChild(thead);
+}
+
+function buildRows3(rows) {
+    // First, build the table structure.
+    buildTable3();
+
+    // Find the table body, where the rows will be rendered.
+    var tbody = document.querySelector("tbody");
+    
+    // Iterate over each movie title,
+    // create the tr (row element) and td elements (column elements)
+    // and append to the table body.
+    rows.forEach(function (name) {
+        var nameTr = document.createElement("tr");
+
+        // Object.keys returns an array of the keys object
+        var nameKeys = Object.keys(name);
+
+        // This makes it easy to iterate over the values
+        // in the object by using bracket notation
+        // to access each property in the object.
+        nameKeys.forEach(function (key) {
+            var formatted = "";
+            var value = name[key];
+            if (key == "tickets") {
+                formatted = numeral(value).format('0,0');
+            } else  if (key == "sales") {
+                formatted = numeral(value).format('$0,0p[.]00');
+            } else if (key == "released") {
+                formatted = moment(value).format("l");
+            } else if (key == "averageCurrency") {
+                formatted = numeral(value).format('$0,0.00');
+            } else if (key == "averageNum") {
+                formatted = numeral(value).format('0,0');
+            } else {
+                formatted = value;
+            }
+            var td = document.createElement("td");
+            td.textContent = formatted;
+
+            nameTr.appendChild(td);
+        });
+
+        tbody.appendChild(nameTr);
+    });
+    
+    // Build totals rows
+    var tableFooter = document.createElement("tfoot");
+    var totalsTr = document.createElement("tr");
+    var totalsNameTd = document.createElement("td");
+
+    // We don't want anything in the second column
+    var blankTd = document.createElement("td");
+
+    var totalsTotalTd = document.createElement("td");
+
+    // Append totals row
+    totalsTr.appendChild(totalsNameTd);
+    totalsTr.appendChild(blankTd);
+    totalsTr.appendChild(totalsTotalTd);
+
+    // Append footer (with totals)
+    tableFooter.appendChild(totalsTr);
+    table.appendChild(tableFooter);
+}
+
+
 
 // When the selection in the dropdown changes,
 // we want to clear and rebuild the table
@@ -232,14 +441,16 @@ dropdown.addEventListener("change", function (e) {
     // and build the table with the data for that value.
     var value = e.target.value;
 
-    if (value === "starWars") {
+    if (value === "star-wars") {
         buildRows(starWars);
     } else if (value === "remake20th") {
         buildRows(remake20th);
-    } else if (value === "avgByGenre") {
-        buildRows(avgByGenre);
-    } else if (value === "topByTickets") {
-        buildRows(topByTickets);
+    } else if (value === "avg-by-genre") {
+        buildRows2(avgByGenre);
+    } else if (value === "top-by-tickets") {
+        buildRows3(topByTickets);
+    } else if (value === "avg-by-rating") {
+        buildRows(avgByRating);
     } else {
         buildRows(MOVIES);
     }
