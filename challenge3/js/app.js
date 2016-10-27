@@ -3,12 +3,14 @@
 var dropdown = document.querySelector("#report-select");
 var table = document.querySelector(".table");
 
+// Only returns Star Wars movies
 var starWars = MOVIES.filter(function (item) {
     return item.title.toLowerCase().includes("star wars");
 });
 
 starWars.sort(compareString('title'));
 
+// Only returns movies released before Jan 1st, 2001
 var remake20th = MOVIES.filter(function (item) {
     var movieDate = new Date(item.released);
     var compareDate = new Date("January 1, 2001");
@@ -23,8 +25,8 @@ var topByTickets = generateTop();
 
 var avgByRating = generateRatingAvg();
 
-//http://stackoverflow.com/questions/8537602/any-way-to-extend-javascripts-array-sort-method-to-accept-another-parameter
-//sorts a numerical property by a descending or ascending order
+// http://stackoverflow.com/questions/8537602/any-way-to-extend-javascripts-array-sort-method-to-accept-another-parameter
+// Sorts a numerical property by a descending or ascending order
 function compareNum(prop, order) {
     return function(a, b) {
         if (order == "desc") {
@@ -35,7 +37,7 @@ function compareNum(prop, order) {
     }
 }
 
-// sorts string alphabetically
+// Sorts string alphabetically
 function compareString(prop) {
     return function(a, b) {
         var str1 = a[prop];
@@ -44,28 +46,29 @@ function compareString(prop) {
     }
 }
 
+// Returns an array that represents the average sales per genre
 function generateGenreAvg() {
     var genreSales = [];
     
     MOVIES.forEach(function(item) {
 
-        //if the genre is not in the object yet, create a new key with
-        //the genre, and add in the genre name and sales
+        // if the genre is not in the object yet, create a new key with
+        // the genre, and add in the the sales and a starting count
         if (!(item.genre in genreSales)) {;
             //genreSales[item.genre] = {genre : item.genre, sales : item.sales, count: 1};
             genreSales[item.genre] = {sales : item.sales, count: 1};             
 
-        //if the genre is in the object, add the sales to the old sales amount
-        //and increase count by 1
+        // if the genre is in the object, add the sales 
+        // to the old sales amountand increase count by 1
         } else {
             genreSales[item.genre].sales += item.sales;
             genreSales[item.genre].count += 1;
-
         }
     });
     
     var avgSales = [];
-    //calculates the average sales of each genre
+    
+    // Calculates the average sales of each genre
     for (var key in genreSales) {
         var avg = genreSales[key].sales / genreSales[key].count;
         if (key == "") {
@@ -79,6 +82,7 @@ function generateGenreAvg() {
     return avgSales;
 }
 
+// Returns an array that represents top selling movies
 function generateTop() {
     var ticketSales = [];
     
@@ -94,50 +98,55 @@ function generateTop() {
     });
     
     var topSales = [];
+    
     for (var key in ticketSales) {
         topSales.push({title: key, tickets: ticketSales[key].tickets});
     }
     topSales.sort(compareNum('tickets', 'desc'));
     
-    //only shows the top 100
+    // only shows the top 100
     topSales.length = 100;
     
     return topSales;
 }
 
+// Returns an array that represents average sales and tickets per rating
 function generateRatingAvg() {
     var ratingStats = [];
     
     MOVIES.forEach(function(item) {
 
-        //if the genre is not in the object yet, create a new key with
-        //the genre, and add in the genre name and sales
         if (!(item.rating in ratingStats)) {;
-            ratingStats[item.rating] = {sales : item.sales, tickets: item.tickets, count: 1};             
-
-        //if the genre is in the object, add the sales to the old sales amount
-        //and increase count by 1
+            ratingStats[item.rating] = {sales : item.sales, tickets: item.tickets, count: 1};        
         } else {
             ratingStats[item.rating].sales += item.sales;
             ratingStats[item.rating].tickets += item.tickets;
             ratingStats[item.rating].count += 1;
-
         }
     });
     
     var ratingAvg = [];
-    //calculates the average sales of each genre
+    
+    // Calculates the average sales and tickets per rating
     for (var key in ratingStats) {
         var avgSales = ratingStats[key].sales / ratingStats[key].count;
         var avgTickets = ratingStats[key].tickets / ratingStats[key].count;
-        if (key == "") {
-            ratingAvg.push({genre: "N/A", averageCurrency: avgSales, averageNum : avgTickets})
-        } else {
-            ratingAvg.push({genre: key, averageCurrency: avgSales, averageNum : avgTickets})
-        }
+        ratingAvg.push({rating: key, averageCurrency: avgSales, averageNum : avgTickets})
     }
 
-    //ratingAvg.sort(compareNum('average', 'desc'));
+    var order = ["Not Rated", "G", "PG", "PG-13", "R", "NC-17"];
+
+    // finds the index of each rating in the ratingAvg array
+    for (var i = 0; i < order.length; i++) {
+        var search = order[i];
+        var index = -1;
+        for (var j = 0; j < ratingAvg.length; j++) {
+            if (ratingAvg[j].rating === search) {
+                index = j;
+            }
+        }
+    }
+    
     return ratingAvg;
 }
 
@@ -150,7 +159,7 @@ function buildTable(type) {
     // Row for the header
     var threadRow = document.createElement("tr");
     
-    
+    // builds specific tables for specific reports
     if (type == 'genre') {
         // Columns for the header
         var genreTh = document.createElement("th");
@@ -225,13 +234,14 @@ function buildTable(type) {
 }
 
 function buildRows(rows, type) {
-    //builds the specific table for the selected report
+    
+    // builds the specific table for the selected report
     if (type == 'genre') {
-        buildTableGenre(type);
+        buildTable(type);
     } else if (type == 'top') {
-        buildTableTop(type);
+        buildTable(type);
     } else if (type == 'rating') {
-        buildTableRating(type);
+        buildTable(type);
     } else {
         buildTable(type);
     }
@@ -320,5 +330,5 @@ dropdown.addEventListener("change", function (e) {
     }
 });
 
-// On page load, show the data for all movies
+// Show the data for all movies on page load
 buildRows(MOVIES);
