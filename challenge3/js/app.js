@@ -217,9 +217,11 @@ function buildTable(type) {
         yearTh.textContent = "Year";
 
         var salesTh = document.createElement("th");
+        salesTh.id = "right";
         salesTh.textContent = "Gross Sales";
 
         var ticketsTh = document.createElement("th");
+        ticketsTh.id = "right";
         ticketsTh.textContent = "Tickets";
 
         threadRow.appendChild(titleTh);
