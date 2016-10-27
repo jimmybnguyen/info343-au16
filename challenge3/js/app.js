@@ -3,41 +3,6 @@
 var dropdown = document.querySelector("#report-select");
 var table = document.querySelector(".table");
 
-var avgByRating = generateRatingAvg();
-
-// http://stackoverflow.com/questions/8537602/any-way-to-extend-javascripts-array-sort-method-to-accept-another-parameter
-// Sorts a numerical property by a descending or ascending order
-function compareNum(prop, order) {
-    return function(a, b) {
-        if (order == "desc") {
-            return parseInt(b[prop]) - parseInt(a[prop]);
-        } else {
-            return parseInt(a[prop]) - parseInt(b[prop]);
-        }
-    }
-}
-
-// Sorts string alphabetically
-function compareString(prop) {
-    return function(a, b) {
-        var str1 = a[prop];
-        var str2 = b[prop];
-        return str1.localeCompare(str2);
-    }
-}
-
-function compareDate(a, b) {
-    var date1 = new Date(a.released);
-    var date2 = new Date(b.released);
-        if (date1 < date2) {
-            return -1;
-        } else if (date1 == date2) {
-            return 0;
-        } else {
-            return 1;
-        }
-}
-
 // Returns an array that represents the average sales per genre
 function generateGenreAvg() {
     var genreSales = [];
@@ -140,6 +105,41 @@ function generateRatingAvg() {
     }
     
     return ratingAvg;
+}
+
+// http://stackoverflow.com/questions/8537602/any-way-to-extend-javascripts-array-sort-method-to-accept-another-parameter
+// Sorts a numerical property by a descending or ascending order
+function compareNum(prop, order) {
+    return function(a, b) {
+        if (order == "desc") {
+            return parseInt(b[prop]) - parseInt(a[prop]);
+        } else {
+            return parseInt(a[prop]) - parseInt(b[prop]);
+        }
+    }
+}
+
+// Sorts string alphabetically
+function compareString(prop) {
+    return function(a, b) {
+        var str1 = a[prop];
+        var str2 = b[prop];
+        return str1.localeCompare(str2);
+    }
+}
+
+// http://stackoverflow.com/questions/7513040/how-to-sort-objects-by-date-ascending-order
+// Sorts date by ascending order
+function compareDate(a, b) {
+    var date1 = new Date(a.released);
+    var date2 = new Date(b.released);
+        if (date1 < date2) {
+            return -1;
+        } else if (date1 == date2) {
+            return 0;
+        } else {
+            return 1;
+        }
 }
 
 function buildTable(type) {
