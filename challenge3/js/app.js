@@ -78,7 +78,7 @@ function generateGenreAvg() {
         }
     }
 
-    avgSales.sort(compareNum('average', 'desc'));
+    avgSales.sort(compareNum('averageCurrency', 'desc'));
     return avgSales;
 }
 
@@ -166,6 +166,7 @@ function buildTable(type) {
         genreTh.textContent = "Genre";
 
         var avgTh = document.createElement("th");
+        avgTh.id = "right";
         avgTh.textContent = "Average Sales";
         
         // Append these elements to the table
@@ -176,6 +177,7 @@ function buildTable(type) {
         titleTh.textContent = "Title";
 
         var ticketsTh = document.createElement("th");
+        ticketsTh.id = "right";
         ticketsTh.textContent = "Tickets Sold";
 
         threadRow.appendChild(titleTh);
@@ -185,9 +187,11 @@ function buildTable(type) {
         ratingTh.textContent = "Rating";
 
         var salesTh = document.createElement("th");
+        salesTh.id = "right";
         salesTh.textContent = "Average Sales";
 
         var ticketsTh = document.createElement("th");
+        ticketsTh.id = "right";
         ticketsTh.textContent = "Average Tickets";
 
         threadRow.appendChild(ratingTh);
@@ -277,6 +281,11 @@ function buildRows(rows, type) {
             }
             var td = document.createElement("td");
             td.textContent = formatted;
+            
+            // right aligns numeric values in the table
+            if (key == "sales" || key == "tickets" || key == "averageCurrency" || key == "averageNum") {
+                td.id = "right";
+            }
 
             nameTr.appendChild(td);
         });
