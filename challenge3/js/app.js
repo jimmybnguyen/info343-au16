@@ -3,49 +3,6 @@
 var dropdown = document.querySelector("#report-select");
 var table = document.querySelector(".table");
 
-// Only returns Star Wars movies
-var starWars = MOVIES.filter(function (item) {
-    return item.title.toLowerCase().includes("star wars");
-});
-
-starWars.sort(compareString('title'));
-
-// Only returns movies released before Jan 1st, 2001
-var remake20th = MOVIES.filter(function (item) {
-    var movieDate = new Date(item.released);
-    var compareDate = new Date("January 1, 2001");
-    return movieDate < compareDate;
-});
-
-remake20th.sort(compareNum("released", "asc"));
-
-var avgByGenre = generateGenreAvg();
-
-var topByTickets = generateTop();
-
-var avgByRating = generateRatingAvg();
-
-// http://stackoverflow.com/questions/8537602/any-way-to-extend-javascripts-array-sort-method-to-accept-another-parameter
-// Sorts a numerical property by a descending or ascending order
-function compareNum(prop, order) {
-    return function(a, b) {
-        if (order == "desc") {
-            return parseInt(b[prop]) - parseInt(a[prop]);
-        } else {
-            return parseInt(a[prop]) - parseInt(b[prop]);
-        }
-    }
-}
-
-// Sorts string alphabetically
-function compareString(prop) {
-    return function(a, b) {
-        var str1 = a[prop];
-        var str2 = b[prop];
-        return str1.localeCompare(str2);
-    }
-}
-
 // Returns an array that represents the average sales per genre
 function generateGenreAvg() {
     var genreSales = [];
@@ -148,6 +105,41 @@ function generateRatingAvg() {
     }
     
     return ratingAvg;
+}
+
+// http://stackoverflow.com/questions/8537602/any-way-to-extend-javascripts-array-sort-method-to-accept-another-parameter
+// Sorts a numerical property by a descending or ascending order
+function compareNum(prop, order) {
+    return function(a, b) {
+        if (order == "desc") {
+            return parseInt(b[prop]) - parseInt(a[prop]);
+        } else {
+            return parseInt(a[prop]) - parseInt(b[prop]);
+        }
+    }
+}
+
+// Sorts string alphabetically
+function compareString(prop) {
+    return function(a, b) {
+        var str1 = a[prop];
+        var str2 = b[prop];
+        return str1.localeCompare(str2);
+    }
+}
+
+// http://stackoverflow.com/questions/7513040/how-to-sort-objects-by-date-ascending-order
+// Sorts date by ascending order
+function compareDate(a, b) {
+    var date1 = new Date(a.released);
+    var date2 = new Date(b.released);
+        if (date1 < date2) {
+            return -1;
+        } else if (date1 == date2) {
+            return 0;
+        } else {
+            return 1;
+        }
 }
 
 function buildTable(type) {
@@ -325,16 +317,37 @@ dropdown.addEventListener("change", function (e) {
     // Get the current value of the dropdown,
     // and build the table with the data for that value.
     var value = e.target.value;
-
+    
+    // Builds the report only when it is selected
     if (value === "star-wars") {
+        
+        // Only returns Star Wars movies
+        var starWars = MOVIES.filter(function (item) {
+            return item.title.toLowerCase().includes("star wars");
+        });
+        
+        starWars.sort(compareString('title'));
         buildRows(starWars);
     } else if (value === "remake20th") {
+        
+        // Only returns movies released before Jan 1st, 2001
+        var remake20th = MOVIES.filter(function (item) {
+            var movieDate = new Date(item.released);
+            var compareDate = new Date("January 1, 2001");
+            return movieDate < compareDate;
+        });
+        
+        //remake20th.sort(compareNum("released", "asc"));
+        remake20th.sort(compareDate);
         buildRows(remake20th);
     } else if (value === "avg-by-genre") {
+        var avgByGenre = generateGenreAvg();
         buildRows(avgByGenre, "genre");
     } else if (value === "top-by-tickets") {
+        var topByTickets = generateTop();
         buildRows(topByTickets, "top");
     } else if (value === "avg-by-rating") {
+        var avgByRating = generateRatingAvg();
         buildRows(avgByRating, "rating");
     } else {
         buildRows(MOVIES);
