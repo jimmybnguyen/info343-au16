@@ -26,6 +26,18 @@ function compareString(prop) {
     }
 }
 
+function compareDate(a, b) {
+    var date1 = new Date(a.released);
+    var date2 = new Date(b.released);
+        if (date1 < date2) {
+            return -1;
+        } else if (date1 == date2) {
+            return 0;
+        } else {
+            return 1;
+        }
+}
+
 // Returns an array that represents the average sales per genre
 function generateGenreAvg() {
     var genreSales = [];
@@ -325,7 +337,8 @@ dropdown.addEventListener("change", function (e) {
             return movieDate < compareDate;
         });
         
-        remake20th.sort(compareNum("released", "asc"));
+        //remake20th.sort(compareNum("released", "asc"));
+        remake20th.sort(compareDate);
         buildRows(remake20th);
     } else if (value === "avg-by-genre") {
         var avgByGenre = generateGenreAvg();
