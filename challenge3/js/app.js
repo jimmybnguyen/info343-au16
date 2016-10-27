@@ -332,12 +332,11 @@ dropdown.addEventListener("change", function (e) {
         
         // Only returns movies released before Jan 1st, 2001
         var remake20th = MOVIES.filter(function (item) {
-            var movieDate = new Date(item.released);
-            var compareDate = new Date("January 1, 2001");
-            return movieDate < compareDate;
+        var movieDate = new Date(item.released);
+        var compareDate = new Date("January 1, 2001");
+        return movieDate < compareDate;
         });
         
-        //remake20th.sort(compareNum("released", "asc"));
         remake20th.sort(compareDate);
         buildRows(remake20th);
     } else if (value === "avg-by-genre") {
