@@ -1,0 +1,280 @@
+header {
+    background-image: url('../img/header.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    padding-top: 200px;
+    padding-bottom: 25px;
+    height: 500px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    margin-top: 0px;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-weight: 200;
+    font-size: 6em;
+    line-height: 0.5em;
+}
+
+h2.small {
+    font-variant: small-caps;
+    font-size: 30px;
+    padding-bottom: 20px;
+}
+
+body {
+    font-family: 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+}
+
+p {
+    line-height: 1.43;
+    margin-top: 0px;
+    margin-bottom: 1em;
+}
+
+.sub-heading {
+    width: 50%;
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.get-yours-link {
+    display: inline-block;
+    padding: 8px 15px 8px 15px;
+    background-color: #814236;
+    color: white;
+    border: 1px solid black;
+    text-decoration: none;
+}
+
+.get-yours-link:hover {
+    color: white;
+}
+
+.get-yours-link:visited {
+    color: white;
+}
+
+.get-yours-link-mobile {
+    display: none;
+}
+
+.fa-shopping-cart {
+    margin-right: 3px;
+}
+
+.features-section {
+    padding: 30px 0px;
+    background-color: #F8F8F8;
+}
+
+.features-section h2 {
+    text-align: center;
+    padding-bottom: 30px
+}
+
+.feature {
+    height: 300px;
+    background-color: white;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.feature svg {
+    height: 50px;
+    fill: #814236;
+}
+
+.uses-section {
+    background-color: #EBEBEB;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.uses-section h2 {
+    text-align: center;
+}
+
+.uses {
+    height: 300px;
+    background-color: white;
+    text-align: left;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.uses h3 {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.uses p {
+    padding-left: 10px;
+}
+
+.uses-img-top-color {
+    background-image: url('../img/coloring.jpg');
+    background-size: cover;
+    height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+}
+
+.uses-img-top-draft {
+    background-image: url('../img/drafting.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+}
+
+.uses-img-top-art {
+    background-image: url('../img/art.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+}
+
+.uses-img-top-note {
+    background-image: url('../img/note-taking.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 150px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+}
+
+.testimonials-section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #F8F8F8;
+}
+
+.testimonials-section h2 {
+    text-align: center;
+}
+
+.testimonials-section h3, h4 {
+    display: inline;
+}
+
+.testimonials-section h4 {
+    line-height: 80%;
+    color: #999999;
+}
+
+.testimonials {
+    height: 300px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.testimonials p {
+    overflow: hidden;
+}
+
+.testimonials .img-circle {
+    float: left;
+    padding: 20px;
+}
+
+footer {
+    padding: 75px;
+    background-color: #391D18;
+    color: #EEEEEE;
+}
+
+footer a {
+    color: #AAAAAA;
+    text-decoration: none;
+}
+
+footer i {
+    font-size: 120%;
+    padding: 5px;
+}
+
+footer .social-media-icons {
+    float: right;
+    margin-top: 0;
+}
+
+@media (max-width: 992px) {
+    header {
+        background-image: linear-gradient(to bottom, #391D18, #814236);
+        color: white;
+        padding: 25px;
+        height: auto;
+    }
+
+    .get-yours-link {
+        display: none;
+    }
+
+    .get-yours-link-mobile {
+        display: block;
+        color: white;
+        font-size: 24px;
+        float: right;
+    }
+    
+    .sub-heading {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    h1 {
+        font-weight: 100;    
+        font-size: 3em;
+        line-height: 1em;
+    }
+    
+    .feature {
+        text-align: left;
+        height: auto;
+    }
+
+    .feature svg {
+        float: left;
+        fill: #814236;
+    }
+
+    .feature-copy {
+        padding-left: 60px;
+    }
+    
+    footer i {
+        font-size: 120%;
+        padding: 5px;
+        float: left;
+    }
+    
+    footer .social-media-icons {
+        float: left;
+        margin-bottom: 20px;
+    }
+    
+    .uses {
+        height: auto;
+    }
+    
+    .testimonials {
+        height: auto;
+    }
+    
+}
