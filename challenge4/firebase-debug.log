@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\bnguy\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.0.8
+[debug] Platform:     win32
+[debug] Node Version: v6.9.1
+[debug] Time:         Sat Nov 05 2016 11:45:57 GMT-0700 (Pacific Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\Users\bnguy\Desktop\Jimmy\info343\challenges-jimmybnguyen\challenge4
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000
