@@ -45,7 +45,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             name.classList.add("display-name");
             
             var postDate = document.createElement("p");
-            postDate.classList.add("mmessage-extra");
+            postDate.classList.add("message-extra");
             postDate.textContent = moment(message.timestamp);
             
             var editButton = document.createElement("p");
