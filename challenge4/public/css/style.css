@@ -15,7 +15,16 @@ header {
 }
 
 .chat-messages {
-    
+
+}
+
+.message-extra {
+    font-size: 0.8em;
+    color: #757575;
+}
+
+.hidden {
+    display: none;
 }
 /*
  * Bootstrap Alerts

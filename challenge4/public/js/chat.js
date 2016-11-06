@@ -19,6 +19,8 @@ firebase.auth().onAuthStateChanged(function(user) {
     // Otherwise, it will be null (falsey).
     if (user) {
         currentUser = user;
+        console.log(user);
+        console.log(currentUser);
         // Connect to firebase
         var database = firebase.database();
         var messages = database.ref('channels/general');
@@ -41,14 +43,35 @@ firebase.auth().onAuthStateChanged(function(user) {
             var name = document.createElement("h5");
             name.innerText = message.displayName;
             name.classList.add("display-name");
+            
+            var postDate = document.createElement("p");
+            postDate.classList.add("mmessage-extra");
+            postDate.textContent = moment(message.timestamp);
+            
+            var editButton = document.createElement("p");
+            editButton.classList.add("message-extra");
+            editButton.textContent = "Edit";
+            
+            var deleteButton = document.createElement("p");
+            deleteButton.classList.add("message-extra");
+            deleteButton.textContent = "Delete";
 
             var messageLi = document.createElement("li");
             messageLi.id = id;
             messageLi.innerText = text;
+            
+            if (user.email !== message.email) {
+                editButton.classList.add("hidden");
+                deleteButton.classList.add("hidden");
+            }
 
             messagesList.appendChild(image);
             messagesList.appendChild(name);
+            messagesList.appendChild(postDate);
+            messagesList.appendChild(editButton);
+            messagesList.appendChild(deleteButton);
             messagesList.appendChild(messageLi);
+
         });
 
         // This event listener will be called whenever an item in the list is edited.

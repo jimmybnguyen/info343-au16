@@ -48,6 +48,9 @@ signupForm.addEventListener("submit", function (e) {
     var email = signupEmail.value;
     var password = signupPassword.value;
     var passwordConfirm = signupPasswordConfirm.value;
+    
+    console.log(displayName);
+    console.log(email);
 
     if (password !== passwordConfirm) {
         signupError.textContent = 'Passwords do not match.';
@@ -55,19 +58,20 @@ signupForm.addEventListener("submit", function (e) {
     } else {
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
-
             // Send verification email
             user.sendEmailVerification(); 
-            
-            // Update their display name and profile picture
-            // displayName , photoURL
+        // Update their display name and profile picture
+        // displayName , photoURL
             user.updateProfile({
                 displayName: displayName,
                 photoURL: "https://www.gravatar.com/avatar/" + md5(email)
             });
+        })
+        .then(function () {
             // Redirect to chat page (dont do this until the other two actions have completed succesfully)
             window.location.href = "chat.html";
         })
+
         .catch(function (error) {
             signupError.textContent = error.message;
             signupError.classList.add('active');
