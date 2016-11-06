@@ -49,25 +49,22 @@ signupForm.addEventListener("submit", function (e) {
     var password = signupPassword.value;
     var passwordConfirm = signupPasswordConfirm.value;
 
-    console.log(displayName);
-    console.log(email);
-    console.log(password);
-    console.log(passwordConfirm);
-
     if (password !== passwordConfirm) {
         signupError.textContent = 'Passwords do not match.';
         signupError.classList.add('active');
     } else {
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
-            console.log(user);
 
             // Send verification email
             user.sendEmailVerification(); 
             
             // Update their display name and profile picture
             // displayName , photoURL
-
+            user.updateProfile({
+                displayName: displayName,
+                photoURL: "https://www.gravatar.com/avatar/" + md5(email)
+            });
             // Redirect to chat page (dont do this until the other two actions have completed succesfully)
             window.location.href = "chat.html";
         })
@@ -84,8 +81,6 @@ firebase.auth().onAuthStateChanged(function(user) {
   // If the user parameter is truthy,
   // the user is logged in.
   if (user) {
-      console.log("signed in");
-
       window.location.href = "chat.html";
   } else {
     // Otherwise, they have not signed in.
