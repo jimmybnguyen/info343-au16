@@ -8,6 +8,7 @@
  */
 var messagesList = document.getElementById("messages");
 var logoutButton = document.getElementById("logout");
+var currentUser;
 
 logoutButton.addEventListener("click", function (e) {
     firebase.auth().signOut();
@@ -17,6 +18,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     // If the user is logged in, user will be an object (truthy).
     // Otherwise, it will be null (falsey).
     if (user) {
+        currentUser = user;
         // Connect to firebase
         var database = firebase.database();
         var messages = database.ref('channels/general');
@@ -79,6 +81,9 @@ messageForm.addEventListener("submit", function (e) {
 
     // Create a new message and add it to the list.
     messages.push({
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        photoURL: currentUser.photoURL,
         text: message,
         timestamp: new Date().getTime() // unix timestamp in milliseconds
     })
