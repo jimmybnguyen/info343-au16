@@ -33,11 +33,21 @@ firebase.auth().onAuthStateChanged(function(user) {
 
             var text = message.text;
             var timestamp = message.timestamp;
+            
+            var image = document.createElement("img");
+            image.classList.add("profile-img");
+            image.src = message.photoURL;
+            
+            var name = document.createElement("h5");
+            name.innerText = message.displayName;
+            name.classList.add("display-name");
 
             var messageLi = document.createElement("li");
             messageLi.id = id;
             messageLi.innerText = text;
 
+            messagesList.appendChild(image);
+            messagesList.appendChild(name);
             messagesList.appendChild(messageLi);
         });
 
