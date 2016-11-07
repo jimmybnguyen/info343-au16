@@ -8,23 +8,44 @@
  */
 var messagesList = document.getElementById("messages");
 var logoutButton = document.getElementById("logout");
+var generalRef = firebase.database().ref("channels/general");
+var memesRef = firebase.database().ref("channels/memes");
+
+var currentRef = generalRef;
+
+var generalButton = document.getElementById("general-button");
+var memesButton = document.getElementById("memes-button");
+var channelName = document.querySelector(".channel-name");
+channelName.textContent = "General";
 var currentUser;
-var currentChannel;
 
 logoutButton.addEventListener("click", function (e) {
     firebase.auth().signOut();
 });
+
+generalButton.addEventListener("click", function() {
+    currentRef.off();
+    currentRef = generalRef;
+    channelName.textContent = "General";
+})
+
+memesButton.addEventListener("click", function() {
+    currentRef.off();
+    currentRef = memesRef;
+    channelName.textContent = "Memes";
+})
 
 firebase.auth().onAuthStateChanged(function(user) {
     // If the user is logged in, user will be an object (truthy).
     // Otherwise, it will be null (falsey).
     if (user) {
         currentUser = user;
-
+        /*
         // Connect to firebase
         var database = firebase.database();
         var messages = database.ref('channels/general');
-        
+        */
+        var messages = currentRef;
         /*
         if (!user.emailVerified) {
             messageInput.disabled = true;
@@ -156,13 +177,16 @@ var messageInput = document.getElementById("message-input");
 // add the message to the list of messages.
 messageForm.addEventListener("submit", function (e) {
     e.preventDefault();
-
+    /*
     // Connect to the firebase data
     var database = firebase.database();
 
     // Get the ref for your messages list
     var messages = database.ref('channels/general');
-
+*/
+    
+    var messages = currentRef;
+    
     // Get the message the user entered
     var message = messageInput.value;
     
