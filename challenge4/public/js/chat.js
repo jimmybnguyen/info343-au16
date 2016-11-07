@@ -10,8 +10,6 @@ var messagesList = document.getElementById("messages");
 var logoutButton = document.getElementById("logout");
 var currentUser;
 var currentChannel;
-//var editButtons;
-//var deleteButtons;
 
 logoutButton.addEventListener("click", function (e) {
     firebase.auth().signOut();
@@ -47,28 +45,43 @@ firebase.auth().onAuthStateChanged(function(user) {
             image.classList.add("profile-img");
             image.classList.add("circle");
             image.src = message.photoURL;
+            image.id = id;
             
             var name = document.createElement("h5");
             name.innerText = message.displayName;
             name.classList.add("display-name");
             name.classList.add("inline");
+            name.id = id;
             
             var postDate = document.createElement("span");
             postDate.classList.add("message-extra");
             postDate.textContent = moment(message.timestamp);
+            postDate.id = id;
+            
+            var editText = document.createElement("span");
+            editText.id = id;
+            editText.classList.add("edit-text");
+            editText.textContent = "Edited on ";
+            
+            var editTime = document.createElement("span");
+            editTime.id = id;
+            editTime.classList.add("edit-date");
+            editTime.textContent = moment(message.editTime);
             
             var editButton = document.createElement("span");
             editButton.classList.add("message-extra");
             editButton.textContent = "Edit";
-            editButton.id = "edit";
+            editButton.id = id;
             
             editButton.addEventListener("click", function(e) {
                 e.preventDefault();
                 
                 if (user.email == message.email) {
-                    var promptEdit = prompt("Edit your message", text);
-                    if (promptEdit) {
-                        console.log("edit true");
+                    var editedMessage = prompt("Edit your message", text);
+                    // Edits the message if editMessage is not null
+                    // and is not the same as the old text
+                    if (editedMessage && editedMessage !== text) {
+                        messages.child(id).update({"text": editedMessage, "editTime": new Date().getTime()});
                     }
                 }
 
@@ -77,20 +90,20 @@ firebase.auth().onAuthStateChanged(function(user) {
             var deleteButton = document.createElement("span");
             deleteButton.classList.add("message-extra");
             deleteButton.textContent = "Delete";
-            deleteButton.id = "delete";
+            //deleteButton.id = id;
             
             deleteButton.addEventListener("click", function(e) {
                 e.preventDefault();
                 if (user.email == message.email) {
                     var deleteConfirm = confirm("Are you sure you want to delete this message?");
                     if (deleteConfirm) {
-                        
+                        messages.child(id).remove();
                     }
                 }
             });
 
             var messageLi = document.createElement("li");
-            messageLi.id = id;
+            //messageLi.id = id;
             messageLi.innerText = text;
             if (user.email !== message.email) {
                 editButton.classList.add("hidden");
@@ -100,10 +113,14 @@ firebase.auth().onAuthStateChanged(function(user) {
             messagesList.appendChild(image);
             messagesList.appendChild(name);
             messagesList.appendChild(postDate);
+            if (message.editTime != "") {
+                messagesList.appendChild(editText);
+                messagesList.appendChild(editTime);
+            }
             messagesList.appendChild(editButton);
             messagesList.appendChild(deleteButton);
             messagesList.appendChild(messageLi);
-
+            
         });
 
         // This event listener will be called whenever an item in the list is edited.
@@ -118,7 +135,10 @@ firebase.auth().onAuthStateChanged(function(user) {
         // Use this to remove the HTML of the message that was deleted.
         messages.on('child_removed', function(data) {
             var id = data.key;
-
+            //Does not delete everything
+            //var delete = document.getElementById(id);
+            //messagesList.removeChild(delete);
+            
         });
 
     } else {
@@ -151,7 +171,8 @@ messageForm.addEventListener("submit", function (e) {
             email: currentUser.email,
             photoURL: currentUser.photoURL,
             text: message,
-            timestamp: new Date().getTime() // unix timestamp in milliseconds
+            timestamp: new Date().getTime(), // unix timestamp in milliseconds
+            editTime: ""
         })
         .then(function () {
             // message created succesfully

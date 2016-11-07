@@ -28,6 +28,18 @@ header {
     padding-right: 5px;
 }
 
+.edit-text {
+    font-size: 0.8em;
+    color: #757575;
+    padding-left: 5px;
+}
+
+.edit-date {
+    font-size: 0.8em;
+    color: #757575;
+    padding-right: 5px;
+}
+
 .hidden {
     display: none;
 }
