@@ -24,6 +24,8 @@ header {
 .message-extra {
     font-size: 0.8em;
     color: #757575;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .hidden {

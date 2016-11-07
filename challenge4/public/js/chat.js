@@ -10,6 +10,8 @@ var messagesList = document.getElementById("messages");
 var logoutButton = document.getElementById("logout");
 var currentUser;
 var currentChannel;
+//var editButtons;
+//var deleteButtons;
 
 logoutButton.addEventListener("click", function (e) {
     firebase.auth().signOut();
@@ -38,7 +40,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         messages.on('child_added', function(data) {
             var id = data.key;
             var message = data.val();
-
             var text = message.text;
             var timestamp = message.timestamp;
             
@@ -52,27 +53,45 @@ firebase.auth().onAuthStateChanged(function(user) {
             name.classList.add("display-name");
             name.classList.add("inline");
             
-            var postDate = document.createElement("p");
+            var postDate = document.createElement("span");
             postDate.classList.add("message-extra");
-            postDate.classList.add("inline");
             postDate.textContent = moment(message.timestamp);
             
-            var editButton = document.createElement("p");
+            var editButton = document.createElement("span");
             editButton.classList.add("message-extra");
-            editButton.classList.add("inline");
             editButton.textContent = "Edit";
-            editButton.type = "edit";
+            editButton.id = "edit";
             
-            var deleteButton = document.createElement("p");
+            editButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                
+                if (user.email == message.email) {
+                    var promptEdit = prompt("Edit your message", text);
+                    if (promptEdit) {
+                        console.log("edit true");
+                    }
+                }
+
+            });
+            
+            var deleteButton = document.createElement("span");
             deleteButton.classList.add("message-extra");
-            deleteButton.classList.add("inline");
             deleteButton.textContent = "Delete";
-            deleteButton.type = "delete";
+            deleteButton.id = "delete";
+            
+            deleteButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                if (user.email == message.email) {
+                    var deleteConfirm = confirm("Are you sure you want to delete this message?");
+                    if (deleteConfirm) {
+                        
+                    }
+                }
+            });
 
             var messageLi = document.createElement("li");
             messageLi.id = id;
             messageLi.innerText = text;
-            
             if (user.email !== message.email) {
                 editButton.classList.add("hidden");
                 deleteButton.classList.add("hidden");
@@ -143,20 +162,3 @@ messageForm.addEventListener("submit", function (e) {
     }
     messageForm.reset();
 });
-/*
-deleteButton.addEventListener("click", function(e) {
-    e.preventDefault();
-    
-    // Connect to the firebase data
-    var database = firebase.database();
-
-    // Get the ref for your messages list
-    var messages = database.ref('channels/general');
-
-    // Get the message the user entered
-    var message = messageInput.value;
-    
-    if (currentUser.email == message.email) {
-        
-    }
-});*/
