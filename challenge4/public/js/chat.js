@@ -42,36 +42,37 @@ firebase.auth().onAuthStateChanged(function(user) {
             var timestamp = message.timestamp;
             
             var image = document.createElement("img");
+            //image.id = id;
             image.classList.add("profile-img");
             image.classList.add("circle");
             image.src = message.photoURL;
-            image.id = id;
             
             var name = document.createElement("h5");
+            //name.id = id;
             name.innerText = message.displayName;
             name.classList.add("display-name");
             name.classList.add("inline");
-            name.id = id;
             
             var postDate = document.createElement("span");
+            //postDate.id = id;
             postDate.classList.add("message-extra");
-            postDate.textContent = moment(message.timestamp);
-            postDate.id = id;
+            //postDate.textContent = moment(message.timestamp);
+            postDate.textContent = moment(message.timestamp).format("MMMM Do YYYY, h:mm:ss a");
             
             var editText = document.createElement("span");
-            editText.id = id;
+            //editText.id = id;
             editText.classList.add("edit-text");
             editText.textContent = "Edited on ";
             
             var editTime = document.createElement("span");
-            editTime.id = id;
+            //editTime.id = id;
             editTime.classList.add("edit-date");
-            editTime.textContent = moment(message.editTime);
+            editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
             
             var editButton = document.createElement("span");
+            //editButton.id = id;
             editButton.classList.add("message-extra");
             editButton.textContent = "Edit";
-            editButton.id = id;
             
             editButton.addEventListener("click", function(e) {
                 e.preventDefault();
@@ -88,9 +89,9 @@ firebase.auth().onAuthStateChanged(function(user) {
             });
             
             var deleteButton = document.createElement("span");
+            //deleteButton.id = id;
             deleteButton.classList.add("message-extra");
             deleteButton.textContent = "Delete";
-            //deleteButton.id = id;
             
             deleteButton.addEventListener("click", function(e) {
                 e.preventDefault();
@@ -103,7 +104,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             });
 
             var messageLi = document.createElement("li");
-            //messageLi.id = id;
+            messageLi.id = id;
             messageLi.innerText = text;
             if (user.email !== message.email) {
                 editButton.classList.add("hidden");
@@ -128,6 +129,9 @@ firebase.auth().onAuthStateChanged(function(user) {
         messages.on('child_changed', function(data) {
             var id = data.key;
             var message = data.val();
+            var newText = message.text;
+            var messageToEdit = document.getElementById(id);
+            messageToEdit.textContent = newText;
 
         });
 
@@ -135,10 +139,8 @@ firebase.auth().onAuthStateChanged(function(user) {
         // Use this to remove the HTML of the message that was deleted.
         messages.on('child_removed', function(data) {
             var id = data.key;
-            //Does not delete everything
-            //var delete = document.getElementById(id);
-            //messagesList.removeChild(delete);
-            
+            var contentToRemove = document.querySelectorAll('#' + id);
+            $(contentToRemove).remove();
         });
 
     } else {
