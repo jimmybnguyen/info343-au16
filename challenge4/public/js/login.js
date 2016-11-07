@@ -60,16 +60,20 @@ signupForm.addEventListener("submit", function (e) {
         .then(function (user) {
             // Send verification email
             user.sendEmailVerification(); 
-        // Update their display name and profile picture
-        // displayName , photoURL
-            user.updateProfile({
+            
+            // Update their display name and profile picture
+            // displayName , photoURL
+            return user.updateProfile({
                 displayName: displayName,
                 photoURL: "https://www.gravatar.com/avatar/" + md5(email)
             });
         })
         .then(function () {
-            // Redirect to chat page (dont do this until the other two actions have completed succesfully)
-            window.location.href = "chat.html";
+            // Redirect to chat page
+            // Waits 1000ms to ensure displayName and PhotoURL was set
+            setTimeout(function() {
+                window.location.href = "chat.html"
+            }, 1000);
         })
 
         .catch(function (error) {
