@@ -1,22 +1,18 @@
-/*
- * This file should contain code for the following tasks:
- * 1. Display the list of chat messages.
- * 2. Send a new message.
- * 3. Allow a user to edit and delete their own messages.
- * 4. Allow a user to log out.
- * 5. Redirect a user to index.html if they are not logged in.
- */
+"use strict";
+
+// Store DOM elements
 var messagesList = document.getElementById("messages");
 var logoutButton = document.getElementById("logout");
 var generalRef = firebase.database().ref("channels/general");
 var memesRef = firebase.database().ref("channels/memes");
-
-var currentRef = generalRef;
-
 var generalButton = document.getElementById("general-button");
 var memesButton = document.getElementById("memes-button");
 var channelName = document.querySelector(".channel-name");
+
+// Set default channel to General
+var currentRef = generalRef;
 channelName.textContent = "General";
+
 var currentUser;
 
 logoutButton.addEventListener("click", function (e) {
@@ -45,13 +41,13 @@ firebase.auth().onAuthStateChanged(function(user) {
         var database = firebase.database();
         var messages = database.ref('channels/general');
         */
+        
+        // The current messages list.
         var messages = currentRef;
-        /*
-        if (!user.emailVerified) {
-            messageInput.disabled = true;
-            messageInput.placeholder = "Please verify your email to post, edit, and delete.";
-        }*/
-
+        
+        // Only shows the most recent 100 messages
+        messages.limitToLast(100);
+        
         // This event listener will be called for each item
         // that has been added to the list.
         // Use this to generate each chat message,
@@ -240,6 +236,7 @@ messageForm.addEventListener("submit", function (e) {
     var messages = database.ref('channels/general');
     */
     
+    // The current messages list 
     var messages = currentRef;
     
     // Get the message the user entered
@@ -254,9 +251,6 @@ messageForm.addEventListener("submit", function (e) {
             text: message,
             timestamp: new Date().getTime(), // unix timestamp in milliseconds
             editTime: ""
-        })
-        .then(function () {
-            // message created succesfully
         })
         .catch(function(error) {
             messageError.textContent = error.message;

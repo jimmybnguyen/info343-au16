@@ -1,16 +1,11 @@
 "use strict";
-/*
- * This file should contain code for the following tasks:
- * 1. Create a new account.
- * 2. Sign in an existing account.
- * 3. Redirect a user to chat.html once they are logged in/signed up.
- */
 
 // Store our DOM elements
 var loginForm = document.getElementById("login-form");
 var loginEmail = document.getElementById("login-email");
 var loginPassword = document.getElementById("login-password");
 var loginButton = document.getElementById("login-button");
+var loginError = document.getElementById("login-error");
 
 // When the user logs in, send the email and password to firebase.
 // Firebase will determine whether or not the user logged in correctly.
@@ -24,11 +19,9 @@ loginForm.addEventListener("submit", function (e) {
     // Otherwise, the .catch callback will be called,
     // with an error object containing the error message.
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(function() {
-      console.log("Logged in successfully!");
-    })
     .catch(function(error) {
-      console.log(error.message);
+        loginError.textContent = error.message;
+        loginError.classList.add('active');
     });
 });
 
@@ -48,9 +41,6 @@ signupForm.addEventListener("submit", function (e) {
     var email = signupEmail.value;
     var password = signupPassword.value;
     var passwordConfirm = signupPasswordConfirm.value;
-    
-    console.log(displayName);
-    console.log(email);
 
     if (password !== passwordConfirm) {
         signupError.textContent = 'Passwords do not match.';
@@ -58,7 +48,7 @@ signupForm.addEventListener("submit", function (e) {
     } else {
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
-            // Send verification email
+
             user.sendEmailVerification(); 
             
             // Update their display name and profile picture
@@ -69,13 +59,12 @@ signupForm.addEventListener("submit", function (e) {
             });
         })
         .then(function () {
-            // Redirect to chat page
+            // Redirect to chat page after signing up
             // Waits 1000ms to ensure displayName and PhotoURL was set
             setTimeout(function() {
                 window.location.href = "chat.html"
             }, 1000);
         })
-
         .catch(function (error) {
             signupError.textContent = error.message;
             signupError.classList.add('active');
@@ -90,8 +79,5 @@ firebase.auth().onAuthStateChanged(function(user) {
   // the user is logged in.
   if (user) {
       window.location.href = "chat.html";
-  } else {
-    // Otherwise, they have not signed in.
-    console.log("signed out");
   }
 });

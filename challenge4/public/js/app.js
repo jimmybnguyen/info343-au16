@@ -1,4 +1,5 @@
 "use strict";
+
 var config = {
     apiKey: "AIzaSyAUsTCW4wVtRpeuW6vRmNSUH01Dt8FoE2M",
     authDomain: "fireslack-cafa1.firebaseapp.com",
