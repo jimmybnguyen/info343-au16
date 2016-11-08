@@ -63,7 +63,6 @@ firebase.auth().onAuthStateChanged(function(user) {
             var timestamp = message.timestamp;
             
             var image = document.createElement("img");
-            //image.id = id;
             image.id = "img" + id;
             image.classList.add("profile-img");
             image.classList.add("circle");
@@ -78,7 +77,6 @@ firebase.auth().onAuthStateChanged(function(user) {
             var postDate = document.createElement("span");
             postDate.id = "post-date" + id;
             postDate.classList.add("message-extra");
-            //postDate.textContent = moment(message.timestamp);
             postDate.textContent = moment(message.timestamp).format("MMMM Do YYYY, h:mm:ss a");
             
             var editText = document.createElement("span");
@@ -108,6 +106,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
                     if (user.email == message.email) {
                         var editedMessage = prompt("Edit your message", text);
+                        
                         // Edits the message if editMessage is not null
                         // and is not the same as the old text
                         if (editedMessage && editedMessage !== text) {
@@ -209,7 +208,8 @@ firebase.auth().onAuthStateChanged(function(user) {
             editButtonToRemove.remove();
             deleteButtonToRemove.remove();
             chatMessageToRemove.remove();
-        
+            // Checks to see if it is an edited post. If so, delete
+            // edited post UI elements
             if (editTextToRemove != null && editTimeToRemove != null) {
                 editTextToRemove.remove();
                 editTimeToRemove.remove();
@@ -224,18 +224,21 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 var messageForm = document.getElementById("message-form");
 var messageInput = document.getElementById("message-input");
+var messageError = document.getElementById("message-error");
 
 // When the user submits the form to send a message,
 // add the message to the list of messages.
 messageForm.addEventListener("submit", function (e) {
     e.preventDefault();
+    
+    messageError.classList.remove('active');
     /*
     // Connect to the firebase data
     var database = firebase.database();
 
     // Get the ref for your messages list
     var messages = database.ref('channels/general');
-*/
+    */
     
     var messages = currentRef;
     
@@ -256,7 +259,8 @@ messageForm.addEventListener("submit", function (e) {
             // message created succesfully
         })
         .catch(function(error) {
-            // message not created succesfully
+            messageError.textContent = error.message;
+            messageError.classList.add('active');
         });
     }
     messageForm.reset();
