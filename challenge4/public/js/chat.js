@@ -165,22 +165,34 @@ firebase.auth().onAuthStateChanged(function(user) {
             var messageToEdit = document.getElementById("chat-message" + id);
             messageToEdit.textContent = newText;
             
-            // Grabbing this as a reference, edit text and time will
-            // be appended before the edit button
-            var editButton = document.getElementById("edit-button" + id);
+            var editText = document.getElementById("edit-text" + id);
+            var editTime = document.getElementById("edit-time" + id);
             
-            // Adding in elements to show the message has been edited
-            var editText = document.createElement("span");
-            editText.id = "edit-text" + id;
-            editText.classList.add("edit-text");
-            editText.textContent = "Edited on ";
+            // The message was not edited before
+            if (editText == null && editTime == null) {
             
-            var editTime = document.createElement("span");
-            editTime.id = "edit-time" + id;
-            editTime.classList.add("edit-time");
-            editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
-            messagesList.insertBefore(editText, editButton);
-            messagesList.insertBefore(editTime, editButton);
+                // Grabbing this as a reference, edit text and time will
+                // be appended before the edit button
+                var editButton = document.getElementById("edit-button" + id);
+
+                // Adding in elements to show the message has been edited
+                var editText = document.createElement("span");
+                editText.id = "edit-text" + id;
+                editText.classList.add("edit-text");
+                editText.textContent = "Edited on ";
+
+                var editTime = document.createElement("span");
+                editTime.id = "edit-time" + id;
+                editTime.classList.add("edit-time");
+                editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
+                messagesList.insertBefore(editText, editButton);
+                messagesList.insertBefore(editTime, editButton);
+                
+            // Update the edited post UI    
+            } else {
+                editText.textContent = "Edited on ";
+                editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
+            }
         });
 
         // This event listener will be called whenever an item in the list is deleted.
