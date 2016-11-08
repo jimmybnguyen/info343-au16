@@ -39,11 +39,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     // Otherwise, it will be null (falsey).
     if (user) {
         currentUser = user;
-        /*
-        // Connect to firebase
-        var database = firebase.database();
-        var messages = database.ref('channels/general');
-        */
         
         // The current messages list.
         var messages = currentRef;
@@ -241,13 +236,6 @@ messageForm.addEventListener("submit", function (e) {
     e.preventDefault();
     
     messageError.classList.remove('active');
-    /*
-    // Connect to the firebase data
-    var database = firebase.database();
-
-    // Get the ref for your messages list
-    var messages = database.ref('channels/general');
-    */
     
     // The current messages list 
     var messages = currentRef;
