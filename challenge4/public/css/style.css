@@ -86,3 +86,9 @@ li {
   background-color: #FFCDD2;
   border-color: #FFEBEE;
 }
+
+.alert-success {
+    color: #2E7D32;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}

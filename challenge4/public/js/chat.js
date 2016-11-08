@@ -3,11 +3,14 @@
 // Store DOM elements
 var messagesList = document.getElementById("messages");
 var logoutButton = document.getElementById("logout");
-var generalRef = firebase.database().ref("channels/general");
-var memesRef = firebase.database().ref("channels/memes");
 var generalButton = document.getElementById("general-button");
 var memesButton = document.getElementById("memes-button");
 var channelName = document.querySelector(".channel-name");
+
+// The different channels in FireSlack
+var generalRef = firebase.database().ref("channels/general");
+var memesRef = firebase.database().ref("channels/memes");
+
 
 // Set default channel to General
 var currentRef = generalRef;
@@ -131,6 +134,8 @@ firebase.auth().onAuthStateChanged(function(user) {
             var messageLi = document.createElement("li");
             messageLi.id = "chat-message" + id;
             messageLi.innerText = text;
+            
+            // Only allow edit and delete for users's own posts
             if (user.email !== message.email) {
                 editButton.classList.add("hidden");
                 deleteButton.classList.add("hidden");
