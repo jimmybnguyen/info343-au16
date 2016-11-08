@@ -46,11 +46,11 @@ firebase.auth().onAuthStateChanged(function(user) {
         var messages = database.ref('channels/general');
         */
         var messages = currentRef;
-        /*
+        
         if (!user.emailVerified) {
             messageInput.disabled = true;
             messageInput.placeholder = "Please verify your email to post.";
-        }*/
+        }
 
         // This event listener will be called for each item
         // that has been added to the list.
@@ -64,34 +64,35 @@ firebase.auth().onAuthStateChanged(function(user) {
             
             var image = document.createElement("img");
             //image.id = id;
+            image.id = "img" + id;
             image.classList.add("profile-img");
             image.classList.add("circle");
             image.src = message.photoURL;
             
             var name = document.createElement("h5");
-            //name.id = id;
+            name.id = "name" + id;
             name.innerText = message.displayName;
             name.classList.add("display-name");
             name.classList.add("inline");
             
             var postDate = document.createElement("span");
-            //postDate.id = id;
+            postDate.id = "post-date" + id;
             postDate.classList.add("message-extra");
             //postDate.textContent = moment(message.timestamp);
             postDate.textContent = moment(message.timestamp).format("MMMM Do YYYY, h:mm:ss a");
             
             var editText = document.createElement("span");
-            //editText.id = id;
+            editText.id = "edit-text" + id;
             editText.classList.add("edit-text");
             editText.textContent = "Edited on ";
             
             var editTime = document.createElement("span");
-            //editTime.id = id;
-            editTime.classList.add("edit-date");
+            editTime.id = "edit-time" + id;
+            editTime.classList.add("edit-time");
             editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
             
             var editButton = document.createElement("span");
-            //editButton.id = id;
+            editButton.id = "edit-button" + id;
             editButton.classList.add("message-extra");
             editButton.textContent = "Edit";
             
@@ -110,7 +111,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             });
             
             var deleteButton = document.createElement("span");
-            //deleteButton.id = id;
+            deleteButton.id = "delete-button" + id;
             deleteButton.classList.add("message-extra");
             deleteButton.textContent = "Delete";
             
@@ -125,20 +126,24 @@ firebase.auth().onAuthStateChanged(function(user) {
             });
 
             var messageLi = document.createElement("li");
-            messageLi.id = id;
+            messageLi.id = "chat-message" + id;
             messageLi.innerText = text;
             if (user.email !== message.email) {
                 editButton.classList.add("hidden");
                 deleteButton.classList.add("hidden");
             }
-
+            
             messagesList.appendChild(image);
             messagesList.appendChild(name);
             messagesList.appendChild(postDate);
+            
+            // If the message has been edited, adds in 
+            // element to show the chat message has been edited
             if (message.editTime != "") {
                 messagesList.appendChild(editText);
                 messagesList.appendChild(editTime);
             }
+            
             messagesList.appendChild(editButton);
             messagesList.appendChild(deleteButton);
             messagesList.appendChild(messageLi);
@@ -150,18 +155,57 @@ firebase.auth().onAuthStateChanged(function(user) {
         messages.on('child_changed', function(data) {
             var id = data.key;
             var message = data.val();
+            
+            // The text from the prompt box
             var newText = message.text;
-            var messageToEdit = document.getElementById(id);
-            messageToEdit.textContent = newText;
 
+            var messageToEdit = document.getElementById("chat-message" + id);
+            messageToEdit.textContent = newText;
+            
+            // Grabbing this as a reference, edit text and time will
+            // be appended before the edit button
+            var editButton = document.getElementById("edit-button" + id);
+            
+            // Adding in elements to show the message has been edited
+            var editText = document.createElement("span");
+            editText.id = "edit-text" + id;
+            editText.classList.add("edit-text");
+            editText.textContent = "Edited on ";
+            
+            var editTime = document.createElement("span");
+            editTime.id = "edit-time" + id;
+            editTime.classList.add("edit-time");
+            editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
+            messagesList.insertBefore(editText, editButton);
+            messagesList.insertBefore(editTime, editButton);
         });
 
         // This event listener will be called whenever an item in the list is deleted.
         // Use this to remove the HTML of the message that was deleted.
         messages.on('child_removed', function(data) {
             var id = data.key;
-            var contentToRemove = document.querySelectorAll('#' + id);
-            $(contentToRemove).remove();
+
+            // Grabs every element per chat message
+            var imageToRemove = document.getElementById("img" + id);
+            var nameToRemove = document.getElementById("name" + id);
+            var postDateToRemove = document.getElementById("post-date" + id);
+            var editTextToRemove = document.getElementById("edit-text" + id);
+            var editTimeToRemove = document.getElementById("edit-time" + id);
+            var editButtonToRemove = document.getElementById("edit-button" + id);
+            var deleteButtonToRemove = document.getElementById("delete-button" + id);
+            var chatMessageToRemove = document.getElementById("chat-message" + id);
+
+            imageToRemove.remove();
+            nameToRemove.remove();
+            postDateToRemove.remove();
+            editButtonToRemove.remove();
+            deleteButtonToRemove.remove();
+            chatMessageToRemove.remove();
+        
+            if (editTextToRemove != null && editTimeToRemove != null) {
+                editTextToRemove.remove();
+                editTimeToRemove.remove();
+            }
         });
 
     } else {
