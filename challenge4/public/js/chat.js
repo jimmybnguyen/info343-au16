@@ -46,11 +46,11 @@ firebase.auth().onAuthStateChanged(function(user) {
         var messages = database.ref('channels/general');
         */
         var messages = currentRef;
-        
+        /*
         if (!user.emailVerified) {
             messageInput.disabled = true;
-            messageInput.placeholder = "Please verify your email to post.";
-        }
+            messageInput.placeholder = "Please verify your email to post, edit, and delete.";
+        }*/
 
         // This event listener will be called for each item
         // that has been added to the list.
@@ -96,35 +96,43 @@ firebase.auth().onAuthStateChanged(function(user) {
             editButton.classList.add("message-extra");
             editButton.textContent = "Edit";
             
-            editButton.addEventListener("click", function(e) {
-                e.preventDefault();
-                
-                if (user.email == message.email) {
-                    var editedMessage = prompt("Edit your message", text);
-                    // Edits the message if editMessage is not null
-                    // and is not the same as the old text
-                    if (editedMessage && editedMessage !== text) {
-                        messages.child(id).update({"text": editedMessage, "editTime": new Date().getTime()});
-                    }
-                }
-
-            });
-            
             var deleteButton = document.createElement("span");
             deleteButton.id = "delete-button" + id;
             deleteButton.classList.add("message-extra");
             deleteButton.textContent = "Delete";
             
-            deleteButton.addEventListener("click", function(e) {
-                e.preventDefault();
-                if (user.email == message.email) {
-                    var deleteConfirm = confirm("Are you sure you want to delete this message?");
-                    if (deleteConfirm) {
-                        messages.child(id).remove();
-                    }
-                }
-            });
+            
+            if (user.emailVerified) {
+                editButton.addEventListener("click", function(e) {
+                    e.preventDefault();
 
+                    if (user.email == message.email) {
+                        var editedMessage = prompt("Edit your message", text);
+                        // Edits the message if editMessage is not null
+                        // and is not the same as the old text
+                        if (editedMessage && editedMessage !== text) {
+                            messages.child(id).update({"text": editedMessage, "editTime": new Date().getTime()});
+                        }
+                    }
+
+                });
+                
+                deleteButton.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    if (user.email == message.email) {
+                        var deleteConfirm = confirm("Are you sure you want to delete this message?");
+                        if (deleteConfirm) {
+                            messages.child(id).remove();
+                        }
+                    }
+                });
+                
+            // Email is not verified
+            } else {
+                messageInput.disabled = true;
+                messageInput.placeholder = "Please verify your email to post, edit, and delete.";
+            }
+            
             var messageLi = document.createElement("li");
             messageLi.id = "chat-message" + id;
             messageLi.innerText = text;
