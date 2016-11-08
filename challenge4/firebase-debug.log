@@ -1,22 +1,14 @@
 [debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\bnguy\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\bnguy\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
 [debug] CLI Version:  3.0.8
 [debug] Platform:     win32
 [debug] Node Version: v6.9.1
-[debug] Time:         Mon Nov 07 2016 22:35:23 GMT-0800 (Pacific Standard Time)
+[debug] Time:         Mon Nov 07 2016 22:38:12 GMT-0800 (Pacific Standard Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
-[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fireslack-cafa1 
-[debug] <<< HTTP RESPONSE 200
-[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/fireslack-cafa1/tokens 
-[debug] <<< HTTP RESPONSE 200
+[info] Starting Firebase development server...
 [info] 
-[info] === Deploying to 'fireslack-cafa1'...
+[info] Project Directory: C:\Users\bnguy\Desktop\Jimmy\info343\challenges-jimmybnguyen\challenge4
+[info] Public Directory: public
 [info] 
-[info] i  deploying database, hosting
-[info] +  database: rules ready to deploy.
-[info] i  hosting: preparing public directory for upload...
-[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/fireslack-cafa1/uploads/-KW1dW5MiN9o1T8FikG7?fileCount=9&message= 
-[debug] <<< HTTP RESPONSE 200
-[info] +  hosting: public folder uploaded successfully
+[info] Server listening at: http://localhost:5000
