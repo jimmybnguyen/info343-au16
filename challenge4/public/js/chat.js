@@ -184,15 +184,11 @@ firebase.auth().onAuthStateChanged(function(user) {
                 var editTime = document.createElement("span");
                 editTime.id = "edit-time" + id;
                 editTime.classList.add("edit-time");
-                editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
                 messagesList.insertBefore(editText, editButton);
                 messagesList.insertBefore(editTime, editButton);
-                
-            // Update the edited post UI    
-            } else {
-                editText.textContent = "Edited on ";
-                editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
             }
+            editText.textContent = "Edited on ";
+            editTime.textContent = moment(message.editTime).format("MMMM Do YYYY, h:mm:ss a");
         });
 
         // This event listener will be called whenever an item in the list is deleted.
