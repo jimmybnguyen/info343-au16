@@ -43,6 +43,8 @@ class App extends React.Component {
                     name={this.state.name}
                     temp={this.state.temp}
                     icon={this.state.icon}
+                    main={this.state.main}
+                    description={this.state.description}
                     onSave={(name) => this.saveResult(name)}
                 /> 
                     
@@ -77,16 +79,21 @@ class App extends React.Component {
             return response.json();
         })
         .then((json) => {
-            console.log(json);
+            console.log(json.weather[0].main);
+            console.log(json.weather[0].description);
             
             var name = json.name;
             var temp = json.main.temp;
             var icon = "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png";
+            var main = json.weather[0].main;
+            var description = "(" + json.weather[0].description + ")";
             
             this.setState({
                 name: name,
                 temp: temp,
-                icon: icon
+                icon: icon,
+                main: main,
+                description: description
             });
         });
     }
