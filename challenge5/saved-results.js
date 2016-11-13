@@ -10,6 +10,8 @@ class SavedResults extends React.Component {
                             <li className="list-group-item" key={result}>
                                 <a href="#" onClick={(e) => this.onSavedClick(e, result)}>          {result}
                                 </a>
+                                <a href="#" className="right" onClick={(e) => this.onRemoveClick(e, result)}>          Remove
+                                </a>
                             </li>
                         ))
                     }
@@ -20,7 +22,13 @@ class SavedResults extends React.Component {
     
     onSavedClick(e, result) {
         e.preventDefault();
-        
-        this.props.onClick(result);
+
+        this.props.clickSaved(result);
+    }
+
+    onRemoveClick(e, result) {
+        e.preventDefault();
+
+        this.props.clickedRemove(result);
     }
 }

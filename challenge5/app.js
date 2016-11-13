@@ -44,7 +44,8 @@ class App extends React.Component {
                     <div className="col sm-6">
                         <SavedResults
                             saved={this.state.saved}
-                            onClick={(result) => this.searchLocation(result)}
+                            clickSaved={(result) => this.searchLocation(result)}
+                            clickedRemove={(result) => this.removeLocation(result)}
                         />
                     </div>
                 </div>
@@ -60,6 +61,22 @@ class App extends React.Component {
                 </div>
         </div>
         );
+    }
+    
+    removeLocation(location) {
+        var saved = this.state.saved;
+        
+        // http://stackoverflow.com/questions/9792927/javascript-array-search-and-remove-string
+        // Finds the index that matches the location, then removes it
+        for (var i=saved.length-1; i>=0; i--) {
+            if (saved[i] === location) {
+                saved.splice(i, 1);
+            }
+        }
+        
+        this.setState({
+            saved: saved
+        });
     }
     
     saveResult(name) {
@@ -82,7 +99,6 @@ class App extends React.Component {
         var queryValue = this.refs.query.value;
         
         this.searchLocation(queryValue);
-        
     }
 
     searchLocation(location) {
