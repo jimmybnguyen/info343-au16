@@ -29,19 +29,19 @@ class App extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col sm-12">
+                    <div className="col-sm-6">
                         <h1>Weather Boot</h1>
                     </div>
                 </div>
             
                 <div className="row">
-                    <div className="col sm-6">
+                    <div className="col-md-6 col-sm-6">
                         <form onSubmit={(e) => this.onSearch(e)}>
                             <input className="form-control" type="text" ref="query" />
                             <button className="btn btn-primary" type="submit">Search</button>
                         </form>
                     </div>
-                    <div className="col sm-6">
+                    <div className="col-sm-6 col-md-6">
                         <SavedResults
                             saved={this.state.saved}
                             clickSaved={(result) => this.searchLocation(result)}
@@ -77,6 +77,9 @@ class App extends React.Component {
         this.setState({
             saved: saved
         });
+        
+        var savedJson = JSON.stringify(saved);
+        localStorage.setItem('savedResults', savedJson);
     }
     
     saveResult(name) {
