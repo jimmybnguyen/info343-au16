@@ -13,8 +13,6 @@ class App extends React.Component {
         var savedResultsJSON = localStorage.getItem('savedResults')
         var savedResults = JSON.parse(savedResultsJSON);
         
-        console.log(savedResults);
-        
         if (savedResults) {
             this.setState({
                 saved: savedResults
@@ -61,7 +59,7 @@ class App extends React.Component {
         
         // Save to local storage
         var savedJson = JSON.stringify(saved);
-        localstorage.setItem('savedResults', savedJson);
+        localStorage.setItem('savedResults', savedJson);
     }
     
     onSearch(e) {
