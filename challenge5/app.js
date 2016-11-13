@@ -20,7 +20,7 @@ class App extends React.Component {
         }
         
         // Shows the weather info for first saved city on page load
-        if (savedResults !== null) {
+        if (savedResults.length !== 0) {
             this.searchLocation(savedResults[0]);
         }
     }
