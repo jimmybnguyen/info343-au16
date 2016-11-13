@@ -3,10 +3,13 @@ class Result extends React.Component {
         return(
             <div>
                 <h2>{this.props.name}</h2>
+            
                 <div>
                     <img src={this.props.icon} />
                 </div>
+            
                 <h3>{this.props.temp}</h3>
+            
                 <p>{this.props.main} {this.props.description}</p>
             
                 <button onClick={(e) => this.save(e)}>Save</button>
@@ -15,9 +18,7 @@ class Result extends React.Component {
     }
 
     save(e) {
-        console.log(e);
-        
-        this.props.onSave(this.props.title);
+        this.props.onSave(this.props.name);
     }    
     
 }
