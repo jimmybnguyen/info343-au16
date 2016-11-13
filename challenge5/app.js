@@ -22,29 +22,38 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Weather Mat</h1>
+            <div className="container">
+                <div className="row">
+                    <div className="col sm-12">
+                        <h1>Weather Mat</h1>
+                    </div>
+                </div>
             
-                <SavedResults
-                    saved={this.state.saved}
-                    onClick={(result) => this.searchLocation(result)}
-                />
-                
-                <form onSubmit={(e) => this.onSearch(e)}>
-                    <input type="text" ref="query" />
-                    <button type="submit">Search</button>
-                </form>
-                    
-                <Result
-                    name={this.state.name}
-                    temp={this.state.temp}
-                    icon={this.state.icon}
-                    main={this.state.main}
-                    description={this.state.description}
-                    onSave={(name) => this.saveResult(name)}
-                /> 
-                    
-            </div>
+                <div className="row">
+                    <div className="col sm-6">
+                        <form onSubmit={(e) => this.onSearch(e)}>
+                            <input className="form-control" type="text" ref="query" />
+                            <button className="btn btn-primary" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <div className="col sm-6">
+                        <SavedResults
+                            saved={this.state.saved}
+                            onClick={(result) => this.searchLocation(result)}
+                        />
+                    </div>
+                </div>
+                <div className="row">
+                    <Result
+                        name={this.state.name}
+                        temp={this.state.temp}
+                        icon={this.state.icon}
+                        main={this.state.main}
+                        description={this.state.description}
+                        onSave={(name) => this.saveResult(name)}
+                    /> 
+                </div>
+        </div>
         );
     }
     

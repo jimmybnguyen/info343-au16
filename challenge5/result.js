@@ -12,7 +12,7 @@ class Result extends React.Component {
             
                 <p>{this.props.main} {this.props.description}</p>
             
-                <button onClick={(e) => this.save(e)}>Save</button>
+                <button className ="btn btn-default" onClick={(e) => this.save(e)}>Save</button>
             </div>
         );
     }
