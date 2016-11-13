@@ -25,7 +25,7 @@ class App extends React.Component {
             <div className="container">
                 <div className="row">
                     <div className="col sm-12">
-                        <h1>Weather Mat</h1>
+                        <h1>Weather Boot</h1>
                     </div>
                 </div>
             
@@ -90,7 +90,7 @@ class App extends React.Component {
         .then((json) => {
             
             var name = json.name;
-            var temp = json.main.temp + "°";
+            var temp = numeral(json.main.temp).format('0,0') + "°";
             var icon = "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png";
             var main = json.weather[0].main;
             var description = "(" + json.weather[0].description + ")";
@@ -102,6 +102,9 @@ class App extends React.Component {
                 main: main,
                 description: description
             });
+        })
+        .catch(function(error) {
+              console.log("Failed!", error);
         });
     }
 }
