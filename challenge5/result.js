@@ -4,15 +4,14 @@ class Result extends React.Component {
             <div>
                 <h2>{this.props.name}</h2>
             
-                <div>
+                <button className ="btn btn-default" onClick={(e) => this.save(e)}>Save</button>
+            
                     <img src={this.props.icon} />
-                </div>
             
                 <h3>{this.props.temp}</h3>
             
                 <p>{this.props.main} {this.props.description}</p>
             
-                <button className ="btn btn-default" onClick={(e) => this.save(e)}>Save</button>
             </div>
         );
     }

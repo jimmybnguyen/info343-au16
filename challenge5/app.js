@@ -35,14 +35,15 @@ class App extends React.Component {
                 </div>
             
                 <div className="row">
-                    <div className="col-md-6 col-sm-6">
+                    <div className="col-md-6 col-sm-12">
                         <form onSubmit={(e) => this.onSearch(e)}>
                             <input className="form-control" type="text" ref="query" />
                             <button className="btn btn-primary" type="submit">Search</button>
                         </form>
                     </div>
-                    <div className="col-sm-6 col-md-6">
+                    <div className="col-sm-12 col-md-6">
                         <SavedResults
+                            saveTitle={this.state.saveTitle}
                             saved={this.state.saved}
                             clickSaved={(result) => this.searchLocation(result)}
                             clickedRemove={(result) => this.removeLocation(result)}
@@ -50,15 +51,35 @@ class App extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <Result
-                        name={this.state.name}
-                        temp={this.state.temp}
-                        icon={this.state.icon}
-                        main={this.state.main}
-                        description={this.state.description}
-                        onSave={(name) => this.saveResult(name)}
-                    /> 
+                    <div className="col-md-6 col-sm-12">
+                        {
+                            this.state.name ? (
+                                <Result
+                                    name={this.state.name}
+                                    temp={this.state.temp}
+                                    icon={this.state.icon}
+                                    main={this.state.main}
+                                    description={this.state.description}
+                                    onSave={(name) => this.saveResult(name)}
+                                /> 
+                            ) : null 
+                        }
+                    </div>
+                <div className="col-md-6 col-sm-12">
+                    {
+                        this.state.name ? (
+                        <Details
+                            tempLow={this.state.tempLow}
+                            tempHigh={this.state.tempHigh}
+                            humidity={this.state.humidity}
+                            pressure={this.state.pressure}
+                            sunrise={this.state.sunrise}
+                            sunset={this.state.sunset}
+                        />
+                        ) : null
+                    }
                 </div>
+              </div>
         </div>
         );
     }
@@ -75,6 +96,7 @@ class App extends React.Component {
         }
         
         this.setState({
+            saveTitle: null,
             saved: saved
         });
         
@@ -84,16 +106,20 @@ class App extends React.Component {
     
     saveResult(name) {
         var saved = this.state.saved;
-        
-        saved.push(name);
-        
-        this.setState({
-            saved: saved
-        });
-        
-        // Save to local storage
-        var savedJson = JSON.stringify(saved);
-        localStorage.setItem('savedResults', savedJson);
+        if (saved.indexOf(name) === -1) {
+            saved.push(name);
+
+            this.setState({
+                saveTitle: "My Locations",
+                saved: saved
+            });
+
+            // Save to local storage
+            var savedJson = JSON.stringify(saved);
+            localStorage.setItem('savedResults', savedJson);
+        } else {
+            // error location already saved
+        }
     }
     
     onSearch(e) {
@@ -112,19 +138,32 @@ class App extends React.Component {
             return response.json();
         })
         .then((json) => {
-            
+            console.log(json);
             var name = json.name;
-            var temp = numeral(json.main.temp).format('0,0') + "°";
+            var temp = numeral(json.main.temp).format('0,0') + "°F";
             var icon = "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png";
             var main = json.weather[0].main;
             var description = "(" + json.weather[0].description + ")";
+            var tempLow = json.main.temp_min + "°F";
+            var tempHigh = json.main.temp_max + "°F";
+            var humidity = json.main.humidity + "%";
+            var pressure = json.main.pressure + " hpa";
+            var sunrise = moment.unix(json.sys.sunrise).format("h:mm a");
+            var sunset = moment.unix(json.sys.sunset).format("h:mm a");
             
             this.setState({
                 name: name,
                 temp: temp,
                 icon: icon,
                 main: main,
-                description: description
+                description: description,
+                saveTitle: "My Locations",
+                tempLow: tempLow,
+                tempHigh: tempHigh,
+                humidity: humidity,
+                pressure: pressure,
+                sunrise: sunrise,
+                sunset: sunset
             });
         })
         .catch(function(error) {
