@@ -30,6 +30,14 @@ class Details extends React.Component {
                             <td>Sunset</td>
                             <td>{this.props.sunset}</td>
                         </tr>
+                        <tr>
+                            <td>Wind Speed</td>
+                            <td>{this.props.speed}</td>
+                        </tr>
+                        <tr>
+                            <td>Wind Direction</td>
+                            <td>{this.props.direction}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

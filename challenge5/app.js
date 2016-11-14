@@ -77,6 +77,8 @@ class App extends React.Component {
                             pressure={this.state.pressure}
                             sunrise={this.state.sunrise}
                             sunset={this.state.sunset}
+                            speed={this.state.speed}
+                            direction={this.state.direction}
                         />
                         ) : null
                     }
@@ -158,6 +160,8 @@ class App extends React.Component {
             var pressure = json.main.pressure + " hpa";
             var sunrise = moment.unix(json.sys.sunrise).format("h:mm a");
             var sunset = moment.unix(json.sys.sunset).format("h:mm a");
+            var speed = json.wind.speed + " mph"
+            var dir = direction(json.wind.deg) + " (" + json.wind.deg + ")";
             
             this.setState({
                 name: name,
@@ -170,7 +174,9 @@ class App extends React.Component {
                 humidity: humidity,
                 pressure: pressure,
                 sunrise: sunrise,
-                sunset: sunset
+                sunset: sunset,
+                speed: speed,
+                direction: dir
             });
         })
         .catch(function(error) {
