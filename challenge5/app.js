@@ -35,13 +35,15 @@ class App extends React.Component {
                 </div>
             
                 <div className="row">
-                    <div className="col-md-6 col-sm-12">
+                    <div className="col-sm-6">
                         <form onSubmit={(e) => this.onSearch(e)}>
                             <input className="form-control" type="text" ref="query" />
                             <button className="btn btn-primary" type="submit">Search</button>
                         </form>
                     </div>
-                    <div className="col-sm-12 col-md-6">
+                </div>
+                <div className="row">
+                    <div className="col-sm-6">
                         <SavedResults
                             saveTitle={this.state.saveTitle}
                             saved={this.state.saved}
@@ -49,7 +51,7 @@ class App extends React.Component {
                             clickedRemove={(result) => this.removeLocation(result)}
                         />
                     </div>
-                </div>
+                    </div>
                 <div className="row">
                     <div className="col-md-6 col-sm-12">
                         {
@@ -65,7 +67,7 @@ class App extends React.Component {
                             ) : null 
                         }
                     </div>
-                <div className="col-md-6 col-sm-12">
+                <div className="col-md-6 col-sm-6">
                     {
                         this.state.name ? (
                         <Details
@@ -95,10 +97,16 @@ class App extends React.Component {
             }
         }
         
+        if (saved.length == 0) {
+            this.setState({
+                saveTitle: null
+            });
+        }
+        
         this.setState({
-            saveTitle: null,
             saved: saved
         });
+        
         
         var savedJson = JSON.stringify(saved);
         localStorage.setItem('savedResults', savedJson);
@@ -157,7 +165,6 @@ class App extends React.Component {
                 icon: icon,
                 main: main,
                 description: description,
-                saveTitle: "My Locations",
                 tempLow: tempLow,
                 tempHigh: tempHigh,
                 humidity: humidity,

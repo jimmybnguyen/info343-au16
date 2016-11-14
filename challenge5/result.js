@@ -2,11 +2,12 @@ class Result extends React.Component {
     render() {
         return(
             <div>
-                <h2>{this.props.name}</h2>
-            
-                <button className ="btn btn-default" onClick={(e) => this.save(e)}>Save</button>
-            
-                    <img src={this.props.icon} />
+                <div>
+                    <h2>{this.props.name}</h2>
+
+                    <button className ="btn btn-default" onClick={(e) => this.save(e)}>Save</button>
+                </div>
+                <img src={this.props.icon} />
             
                 <h3>{this.props.temp}</h3>
             
