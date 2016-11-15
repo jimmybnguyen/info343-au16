@@ -142,15 +142,15 @@ class App extends React.Component {
         
         // Checks to see if input is a zipcode
         if (!isNaN(location)) {
-            var url = "http://api.openweathermap.org/data/2.5/weather?zip=" + location + "&units=imperial&appid=" + API_KEY;
+            var url = "https://www.bell-towne.com/api/weather/?zip=" + location + "&units=imperial&appid=" + API_KEY;
             
         // Checks to see if input is a coordinate point
         } else if (location.indexOf(coordinateTest) !== -1) {
-            var url = "http://api.openweathermap.org/data/2.5/weather?" + location + "&units=imperial&appid=" + API_KEY;
+            var url = "https://www.bell-towne.com/api/weather/?" + location + "&units=imperial&appid=" + API_KEY;
             
         // Input is a string
         } else {
-            var url = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&units=imperial&appid=" + API_KEY; 
+            var url = "https://www.bell-towne.com/api/weather/?q=" + location + "&units=imperial&appid=" + API_KEY; 
         }
         
         var alert = document.getElementById("alert-danger");
