@@ -23,11 +23,8 @@ class Search extends React.Component {
     
     onSearch(e) {
         e.preventDefault();
-        if (!isNaN(this.refs.query.value)) {
-            var queryValue = this.refs.query.value;
-        } else {
-            var queryValue = "q=" + this.refs.query.value;
-        }
+        
+        var queryValue = this.refs.query.value;
         
         this.props.onSearch(queryValue);
     }

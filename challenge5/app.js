@@ -18,7 +18,7 @@ class App extends React.Component {
                 saved: savedResults
             });
         }
-        
+        // Checks to see if geolocation permissions are given
         if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -92,7 +92,7 @@ class App extends React.Component {
         </div>
         );
     }
-    
+    // Remove saved locations from the list
     removeLocation(location) {
         var saved = this.state.saved;
         
@@ -118,9 +118,11 @@ class App extends React.Component {
         var savedJson = JSON.stringify(saved);
         localStorage.setItem('savedResults', savedJson);
     }
-    
+    // Save locations to a list
     saveResult(name) {
         var saved = this.state.saved;
+        
+        // Checks to see if the location is already saved
         if (saved.indexOf(name) === -1) {
             saved.push(name);
 
@@ -131,18 +133,26 @@ class App extends React.Component {
             // Save to local storage
             var savedJson = JSON.stringify(saved);
             localStorage.setItem('savedResults', savedJson);
-        } else {
-            // error location already saved
         }
     }
 
     searchLocation(location) {
+        // Used in coordinate check
+        var coordinateTest = "lat="
+        
+        // Checks to see if input is a zipcode
         if (!isNaN(location)) {
             var url = "http://api.openweathermap.org/data/2.5/weather?zip=" + location + "&units=imperial&appid=" + API_KEY;
-            console.log(url);
+            
+        // Checks to see if input is a coordinate point
+        } else if (location.indexOf(coordinateTest) !== -1) {
+            var url = "http://api.openweathermap.org/data/2.5/weather?" + location + "&units=imperial&appid=" + API_KEY;
+            
+        // Input is a string
         } else {
-            var url = "http://api.openweathermap.org/data/2.5/weather?" + location + "&units=imperial&appid=" + API_KEY; 
+            var url = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&units=imperial&appid=" + API_KEY; 
         }
+        
         var alert = document.getElementById("alert-danger");
         
         fetch(url)
@@ -150,40 +160,49 @@ class App extends React.Component {
             return response.json();
         })
         .then((json) => {
-            var name = json.name;
-            var temp = numeral(json.main.temp).format('0,0') + "°F";
-            var icon = "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png";
-            var main = json.weather[0].main;
-            var description = "(" + json.weather[0].description + ")";
-            var tempLow = json.main.temp_min + "°F";
-            var tempHigh = json.main.temp_max + "°F";
-            var humidity = json.main.humidity + "%";
-            var pressure = json.main.pressure + " hpa";
-            var sunrise = moment.unix(json.sys.sunrise).format("h:mm a");
-            var sunset = moment.unix(json.sys.sunset).format("h:mm a");
-            var speed = json.wind.speed + " mph"
-            var dir = direction(json.wind.deg) + " (" + json.wind.deg + ")";
-            
-            this.setState({
-                name: name,
-                temp: temp,
-                icon: icon,
-                main: main,
-                description: description,
-                tempLow: tempLow,
-                tempHigh: tempHigh,
-                humidity: humidity,
-                pressure: pressure,
-                sunrise: sunrise,
-                sunset: sunset,
-                speed: speed,
-                direction: dir
-            });
-        })
-        .catch((error) => {
-            console.log(error) 
+            // No error message is returned
+            if (json.message == undefined) {
+                alert.classList.add("hidden");
+                
+                // Grabs all of the weather elements
+                var name = json.name;
+                var temp = numeral(json.main.temp).format('0,0') + "°F";
+                var icon = "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png";
+                var main = json.weather[0].main;
+                var description = "(" + json.weather[0].description + ")";
+                var tempLow = json.main.temp_min + "°F";
+                var tempHigh = json.main.temp_max + "°F";
+                var humidity = json.main.humidity + "%";
+                var pressure = json.main.pressure + " hpa";
+                var sunrise = moment.unix(json.sys.sunrise).format("h:mm a");
+                var sunset = moment.unix(json.sys.sunset).format("h:mm a");
+                var speed = json.wind.speed + " mph"
+                var dir = direction(json.wind.deg) + " (" + json.wind.deg + ")";
 
-        });
+                this.setState({
+                    name: name,
+                    temp: temp,
+                    icon: icon,
+                    main: main,
+                    description: description,
+                    tempLow: tempLow,
+                    tempHigh: tempHigh,
+                    humidity: humidity,
+                    pressure: pressure,
+                    sunrise: sunrise,
+                    sunset: sunset,
+                    speed: speed,
+                    direction: dir
+                });
+            // There was an error with the input    
+            } else {
+                alert.classList.remove("hidden");
+                alert.textContent = json.cod + " " + json.message;
+                this.setState({
+                    name: null
+                });
+            }
+        })
     }
 }
 
