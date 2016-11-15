@@ -1,8 +1,13 @@
 class SavedResults extends React.Component {
     render() {
+        
+        if (this.props.saved.length == 0) {
+            return null;
+        }
+        
         return(
             <div>
-                <h3>{this.props.saveTitle}</h3>
+                <h3>My Locations</h3>
 
                 <ul className="list-group">
                     {

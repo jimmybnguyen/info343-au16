@@ -2,7 +2,7 @@ class Search extends React.Component {
     render() {
         return(
                 <form onSubmit={(e) => this.onSearch(e)}>
-                    <input className="form-control" type="text" ref="query" />
+                    <input type="text" ref="query" />
                     <button className="btn btn-primary" type="submit">Search</button>
                 </form>
         );

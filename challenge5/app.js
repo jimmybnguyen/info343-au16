@@ -19,18 +19,17 @@ class App extends React.Component {
             });
         }
         
-        // Shows the weather info for first saved city on page load
-        if (savedResults.length !== 0) {
-            this.searchLocation(savedResults[0]);
-        }
-        
         if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         var geoCoordinates = "lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
                         this.searchLocation(geoCoordinates);
                 });
+        // If no geolocation, shows first saved location if it exist
+        } else if (savedResults.length !== 0) {
+            this.searchLocation(savedResults[0]);
         }
+        
     }
 
     render() {
@@ -126,7 +125,6 @@ class App extends React.Component {
             saved.push(name);
 
             this.setState({
-                saveTitle: "My Locations",
                 saved: saved
             });
 
