@@ -25,7 +25,7 @@ class App extends React.Component {
                         var geoCoordinates = "lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
                         this.searchLocation(geoCoordinates);
                 });
-        // If no geolocation, shows first saved location if it exist
+        // If no geolocation, show first saved location if it exist
         } else if (savedResults.length !== 0) {
             this.searchLocation(savedResults[0]);
         }
@@ -177,7 +177,7 @@ class App extends React.Component {
                 var sunrise = moment.unix(json.sys.sunrise).format("h:mm a");
                 var sunset = moment.unix(json.sys.sunset).format("h:mm a");
                 var speed = json.wind.speed + " mph"
-                var dir = direction(json.wind.deg) + " (" + json.wind.deg + ")";
+                var dir = direction(json.wind.deg) + " (" + numeral(json.wind.deg).format("0,0") + ")";
 
                 this.setState({
                     name: name,
