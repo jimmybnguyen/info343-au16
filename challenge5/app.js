@@ -36,20 +36,16 @@ class App extends React.Component {
     render() {
         return (
             <div className="container">
+                <h1>Weather Boot</h1>
+
                 <div className="row">
                     <div className="col-sm-6">
-                        <h1>Weather Boot</h1>
+                        <Search
+                            onSearch={(queryValue) => this.searchLocation(queryValue)}
+                        />
                     </div>
                 </div>
-            
-                <div className="row">
-                    <div className="col-sm-6">
-                        <form onSubmit={(e) => this.onSearch(e)}>
-                            <input className="form-control" type="text" ref="query" />
-                            <button className="btn btn-primary" type="submit">Search</button>
-                        </form>
-                    </div>
-                </div>
+
                 <div className="row">
                     <div className="col-sm-6">
                         <SavedResults
@@ -59,7 +55,8 @@ class App extends React.Component {
                             clickedRemove={(result) => this.removeLocation(result)}
                         />
                     </div>
-                    </div>
+                </div>
+                        
                 <div className="row">
                     <div className="col-md-6 col-sm-12">
                         {
@@ -75,22 +72,23 @@ class App extends React.Component {
                             ) : null 
                         }
                     </div>
-                <div className="col-md-6 col-sm-6">
-                    {
-                        this.state.name ? (
-                        <Details
-                            tempLow={this.state.tempLow}
-                            tempHigh={this.state.tempHigh}
-                            humidity={this.state.humidity}
-                            pressure={this.state.pressure}
-                            sunrise={this.state.sunrise}
-                            sunset={this.state.sunset}
-                            speed={this.state.speed}
-                            direction={this.state.direction}
-                        />
-                        ) : null
-                    }
-                </div>
+                    
+                    <div className="col-md-6 col-sm-6">
+                        {
+                            this.state.name ? (
+                            <Details
+                                tempLow={this.state.tempLow}
+                                tempHigh={this.state.tempHigh}
+                                humidity={this.state.humidity}
+                                pressure={this.state.pressure}
+                                sunrise={this.state.sunrise}
+                                sunset={this.state.sunset}
+                                speed={this.state.speed}
+                                direction={this.state.direction}
+                            />
+                            ) : null
+                        }
+                    </div>
               </div>
         </div>
         );
@@ -138,14 +136,6 @@ class App extends React.Component {
         } else {
             // error location already saved
         }
-    }
-    
-    onSearch(e) {
-        e.preventDefault();
-        
-        var queryValue = "q=" + this.refs.query.value;
-        
-        this.searchLocation(queryValue);
     }
 
     searchLocation(location) {
