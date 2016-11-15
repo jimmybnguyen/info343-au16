@@ -23,6 +23,14 @@ class App extends React.Component {
         if (savedResults.length !== 0) {
             this.searchLocation(savedResults[0]);
         }
+        
+        if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        var geoCoordinates = "lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
+                        this.searchLocation(geoCoordinates);
+                });
+        }
     }
 
     render() {
@@ -135,13 +143,13 @@ class App extends React.Component {
     onSearch(e) {
         e.preventDefault();
         
-        var queryValue = this.refs.query.value;
+        var queryValue = "q=" + this.refs.query.value;
         
         this.searchLocation(queryValue);
     }
 
     searchLocation(location) {
-        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&units=imperial&appid=" + API_KEY; 
+        var url = "http://api.openweathermap.org/data/2.5/weather?" + location + "&units=imperial&appid=" + API_KEY; 
         
         fetch(url)
         .then(function(response) {
