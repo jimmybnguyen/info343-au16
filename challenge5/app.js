@@ -137,14 +137,19 @@ class App extends React.Component {
     }
 
     searchLocation(location) {
-        var url = "http://api.openweathermap.org/data/2.5/weather?" + location + "&units=imperial&appid=" + API_KEY; 
+        if (!isNaN(location)) {
+            var url = "http://api.openweathermap.org/data/2.5/weather?zip=" + location + "&units=imperial&appid=" + API_KEY;
+            console.log(url);
+        } else {
+            var url = "http://api.openweathermap.org/data/2.5/weather?" + location + "&units=imperial&appid=" + API_KEY; 
+        }
+        var alert = document.getElementById("alert-danger");
         
         fetch(url)
         .then(function(response) {
             return response.json();
         })
         .then((json) => {
-            console.log(json);
             var name = json.name;
             var temp = numeral(json.main.temp).format('0,0') + "°F";
             var icon = "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png";
@@ -175,8 +180,9 @@ class App extends React.Component {
                 direction: dir
             });
         })
-        .catch(function(error) {
-              console.log("Failed!", error);
+        .catch((error) => {
+            console.log(error) 
+
         });
     }
 }
