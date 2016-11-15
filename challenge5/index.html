@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Boot</title>
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <!-- Babel and React libraries -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+    
+    <!--numeral.js: a number formatting library (http://numeraljs.com/) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+    
+    <!--moment.js: a date/time formatting library (http://momentjs.com/.com/) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    
+    <!-- Convert wind data -->
+    <script src="wind.js"></script>
+
+    <!-- React components -->
+    <script type="text/babel" src="search.js"></script>
+    <script type="text/babel" src="result.js"></script>
+    <script type="text/babel" src="details.js"></script>
+    <script type="text/babel" src="saved-results.js"></script>
+    <script type="text/babel" src="app.js"></script>
+    
+</body>
+</html>
