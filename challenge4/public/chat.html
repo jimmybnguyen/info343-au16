@@ -3,14 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Chat App (change this title!)</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>FireSlack</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+   <header>
+        <div class="container">
+    
+            <div class="row">
+                <div class="col s12">
+                    <h1>FireSlack</h1>
+                </div>
+            </div>
+            
+            <div class="row">
+               <div class="col s4">
+                    <a class='dropdown-button btn channel-name' href='#' data-activates='channel-dropdown'>Channels</a>
+                        <ul id="channel-dropdown" class="dropdown-content">
+                            <li>
+                                <a href="#!" id="general-button">General</a>
+                            </li>
+                            <li>
+                                <a href="#!" id="memes-button">Memes</a>
+                            </li>
+                        </ul>
+                </div>
+                
+                <div class="col s4">
+                    <button class="waves-effect waves-light btn inline" id="profile" onclick="location.href = 'profile.html'">Profile</button>
+                </div>
+                
+                <div class="col s4">
+                    <button class="waves-effect waves-light btn inline" id="logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container"> 
+       
+        <ul id="messages"></ul>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+            <form id="message-form">
+                <textarea id="message-input" rows="10" placeholder="Enter your message"></textarea>
+
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+            </form>
+            
+            <div id="message-error" class="alert alert-danger" role="alert"></div>
+            
+    </div>
+    <script src="https://unpkg.com/blueimp-md5@2.4.0/js/md5.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/chat.js"></script>
 </body>
