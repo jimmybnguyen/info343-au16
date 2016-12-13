@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireSlack - Login</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+   <header>
+        <div class="container">
+            <h1>FireSlack</h1>
+        </div>
+   </header>
+    <div class="container">
+       
+        <div class="row">
+            <div class="col s12">
+                <form id="profile-form">
+                    <h4>Profile</h4>
+                    
+                    <ul class="list-unstyled">
+                        <li class="form-group">
+                            <label for="profile-name" class="control-label">Display Name:</label>
+                            <input 
+                                type="text" 
+                                id="profile-name" 
+                                placeholder="First Name Last Name"
+                                class="form-control" 
+                                required
+                            />
+                        </li>
+                        
+                        <li class="form-group">
+                            <label for="profile-email" class="control-label">Email:</label>
+                            <input 
+                                type="email" 
+                                id="profile-email" 
+                                class="form-control" 
+                                placeholder="test@example.com"
+                                required
+                            />
+                        </li>
+                        
+
+                        <li class="form-group">
+                            <label for="profile-password" class="control-label">Password:</label>
+                            <input 
+                                type="password" 
+                                id="profile-password" 
+                                class="form-control" 
+                                placeholder="******"
+                                required
+                            />
+                        </li>
+                        
+                        <li class="form-group">
+                            <label for="profile-password-confirm" class="control-label">Password (Confirm):</label>
+                            <input 
+                                type="password" 
+                                id="profile-password-confirm" 
+                                class="form-control" 
+                                placeholder="******"
+                                required
+                            />
+                        </li>
+                        
+                        <li class="form-group">
+                            <button
+                                id="save-button"
+                                type="submit"
+                                class="btn btn-primary">Save</button>
+                                
+                        </li>
+                
+                    </ul>
+                </form>
+                
+                <button class="waves-effect waves-light btn inline" id="profile" onclick="location.href = 'chat.html'">Back</button>
+                
+                <div id="profile-success" class="alert alert-success" role="alert"></div>
+                <div id="profile-error" class="alert alert-danger" role="alert"></div>
+                
+            </div>
+        </div>
+        
+    </div>
+          
+    <script src="https://unpkg.com/blueimp-md5@2.4.0/js/md5.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/profile.js"></script>
+</body>
+</html>

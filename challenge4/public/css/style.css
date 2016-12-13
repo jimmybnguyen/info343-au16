@@ -1,0 +1,78 @@
+header {
+    background-color: #FB8C00;    
+    padding-bottom: 25px;
+    padding-top: 10px;
+    height: auto;
+}
+
+.message-extra, .edit-text, .edit-time {
+    font-size: 0.8em;
+    color: #757575;
+}
+
+.message-extra {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.edit-text {
+    padding-left: 5px;
+}
+
+.edit-time {
+    padding-right: 5px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.inline {
+    display: inline-block;
+}
+
+p, h5 {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+form {
+    padding-bottom: 20px;
+}
+
+/*
+ * Bootstrap inspired alerts
+*/
+
+.alert {
+    display: none;
+}
+
+.alert.active {
+    display: block;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  color: #D32F2F;
+  background-color: #FFCDD2;
+  border-color: #FFEBEE;
+}
+
+.alert-success {
+    color: #2E7D32;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
